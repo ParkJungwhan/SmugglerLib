@@ -1,0 +1,54 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmugCommon", "SmugCommon\SmugCommon.csproj", "{F6E5289B-4C8D-4BB2-928D-2557A523B099}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C8D5274F-AC00-46C7-1F8D-E88E81087A52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{23076272-E60A-4B71-AC9B-8696E8A97E6A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmugAWS", "SmugAWS\SmugAWS.csproj", "{84BF9CAF-C560-4B90-8D62-C03E9D9071A7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmugControl", "SmugControl\SmugControl.csproj", "{7FAD9954-3D68-4219-8057-BC93B8450393}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWindow", "TestWindow\TestWindow.csproj", "{5D510969-D4D7-4875-BBA9-C4C5227C5735}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F6E5289B-4C8D-4BB2-928D-2557A523B099}.Debug|x64.ActiveCfg = Debug|x64
+		{F6E5289B-4C8D-4BB2-928D-2557A523B099}.Debug|x64.Build.0 = Debug|x64
+		{F6E5289B-4C8D-4BB2-928D-2557A523B099}.Release|x64.ActiveCfg = Release|x64
+		{F6E5289B-4C8D-4BB2-928D-2557A523B099}.Release|x64.Build.0 = Release|x64
+		{23076272-E60A-4B71-AC9B-8696E8A97E6A}.Debug|x64.ActiveCfg = Debug|x64
+		{23076272-E60A-4B71-AC9B-8696E8A97E6A}.Debug|x64.Build.0 = Debug|x64
+		{23076272-E60A-4B71-AC9B-8696E8A97E6A}.Release|x64.ActiveCfg = Release|x64
+		{23076272-E60A-4B71-AC9B-8696E8A97E6A}.Release|x64.Build.0 = Release|x64
+		{84BF9CAF-C560-4B90-8D62-C03E9D9071A7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{84BF9CAF-C560-4B90-8D62-C03E9D9071A7}.Debug|x64.Build.0 = Debug|Any CPU
+		{84BF9CAF-C560-4B90-8D62-C03E9D9071A7}.Release|x64.ActiveCfg = Release|Any CPU
+		{84BF9CAF-C560-4B90-8D62-C03E9D9071A7}.Release|x64.Build.0 = Release|Any CPU
+		{7FAD9954-3D68-4219-8057-BC93B8450393}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7FAD9954-3D68-4219-8057-BC93B8450393}.Debug|x64.Build.0 = Debug|Any CPU
+		{7FAD9954-3D68-4219-8057-BC93B8450393}.Release|x64.ActiveCfg = Release|Any CPU
+		{7FAD9954-3D68-4219-8057-BC93B8450393}.Release|x64.Build.0 = Release|Any CPU
+		{5D510969-D4D7-4875-BBA9-C4C5227C5735}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5D510969-D4D7-4875-BBA9-C4C5227C5735}.Debug|x64.Build.0 = Debug|Any CPU
+		{5D510969-D4D7-4875-BBA9-C4C5227C5735}.Release|x64.ActiveCfg = Release|Any CPU
+		{5D510969-D4D7-4875-BBA9-C4C5227C5735}.Release|x64.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{23076272-E60A-4B71-AC9B-8696E8A97E6A} = {C8D5274F-AC00-46C7-1F8D-E88E81087A52}
+		{5D510969-D4D7-4875-BBA9-C4C5227C5735} = {C8D5274F-AC00-46C7-1F8D-E88E81087A52}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {41C24723-A5DE-43A9-BEDE-B034D38E643F}
+	EndGlobalSection
+EndGlobal

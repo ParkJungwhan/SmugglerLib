@@ -1,0 +1,35 @@
+﻿<UserControl
+    x:Class="TestWindow.ImageViewControl" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:TestWindow" mc:Ignorable="d" d:DesignHeight="450" d:DesignWidth="800"
+    Background="{DynamicResource RegionBrush}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid>
+            <StackPanel Orientation="Horizontal">
+                <hc:TextBox Width="70" Height="30" Text="22" hc:TitleElement.Title="No :" hc:TitleElement.TitlePlacement="Left" Margin="5 0"/>
+                <hc:TextBox Width="70" Height="30" Text="22" hc:TitleElement.Title="No :" hc:TitleElement.TitlePlacement="Left" Margin="5 0"/>
+            </StackPanel>
+            <hc:Divider VerticalAlignment="Bottom" Padding="0" Margin="0" />
+        </Grid>
+        <hc:ScrollViewer HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" hc:CanMouseWheel="True" Grid.Row="1">
+            <ListBox x:Name="lstImg" Background="Transparent" BorderThickness="0" Style="{StaticResource ListBoxCustom}" ItemsSource="{Binding DataList}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <hc:HoneycombPanel hc:PanelElement.FluidMoveBehavior="{StaticResource BehaviorXY200}" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <hc:Gravatar Margin="5" Source="{Binding ContentImg}" ToolTip="{Binding No}">
+                        </hc:Gravatar>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </hc:ScrollViewer>
+    </Grid>
+</UserControl>
