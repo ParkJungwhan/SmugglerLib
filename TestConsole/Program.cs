@@ -1,5 +1,5 @@
-﻿using Amazon.EC2.Model;
-using Amazon.EC2;
+﻿using Amazon.EC2;
+using Amazon.EC2.Model;
 using Microsoft.Extensions.DependencyInjection;
 using SmugAWS;
 

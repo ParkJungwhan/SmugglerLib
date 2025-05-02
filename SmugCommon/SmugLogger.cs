@@ -2,6 +2,34 @@
 
 namespace SmugCommon
 {
+    public static class SmugLoggerExtensions
+    {
+        public static ILoggingBuilder AddSmugLogger(
+                this ILoggingBuilder builder,
+                Func<SmugLoggerConfiguration> getCurrentConfig) =>
+            builder.AddProvider(new SmugLoggerProvider(getCurrentConfig));
+    }
+
+    public class SmugLoggerProvider : ILoggerProvider
+    {
+        private readonly Func<SmugLoggerConfiguration> _getCurrentConfig;
+
+        public SmugLoggerProvider(Func<SmugLoggerConfiguration> getCurrentConfig)
+        {
+            _getCurrentConfig = getCurrentConfig;
+        }
+
+        public ILogger CreateLogger(string categoryName)
+        {
+            return new SmugLogger(categoryName, _getCurrentConfig);
+        }
+
+        public void Dispose()
+        {
+            // No resources to dispose
+        }
+    }
+
     public class SmugLogger : ILogger
     {
         private readonly string _name;
