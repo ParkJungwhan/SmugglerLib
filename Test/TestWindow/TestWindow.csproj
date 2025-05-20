@@ -115,7 +115,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmugControl\SmugControl.csproj" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3240.44" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\SmugControl\SmugControl.csproj" />
   </ItemGroup>
 
 </Project>

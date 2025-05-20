@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SmugCommon\SmugCommon.csproj" />
+    <ProjectReference Include="..\..\SmugCommon\SmugCommon.csproj" />
   </ItemGroup>
 
 </Project>

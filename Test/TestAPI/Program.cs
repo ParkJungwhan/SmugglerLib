@@ -8,7 +8,7 @@ namespace TestAPI
     {
         public static void Main(string[] args)
         {
-            return;
+            //return;
 
             var builder = WebApplication.CreateBuilder(args);
 

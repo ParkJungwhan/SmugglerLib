@@ -22,6 +22,11 @@ namespace TestAPI.Controllers
         [HttpGet(Name = "GetWeatherForecast")]
         public IEnumerable<WeatherForecast> Get()
         {
+            for (int i = 0; i < 10000; i++)
+            {
+                _logger.LogInformation($"{i}\tThis is a test log message");
+            }
+
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),

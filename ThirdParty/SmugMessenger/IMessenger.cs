@@ -2,6 +2,6 @@
 {
     public interface IMessenger
     {
-        void InitMessenger();
+        void InitMessenger(MessengerConfig msgConfig);
     }
 }
