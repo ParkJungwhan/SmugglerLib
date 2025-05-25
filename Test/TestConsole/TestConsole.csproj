@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SmugCommon\SmugCommon.csproj" />
     <ProjectReference Include="..\..\ThirdParty\SmugAWS\SmugAWS.csproj" />
   </ItemGroup>
 

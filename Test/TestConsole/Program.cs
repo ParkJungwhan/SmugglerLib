@@ -9,6 +9,10 @@ namespace TestConsole
     {
         private static async Task Main(string[] args)
         {
+            Crypt.CrpytTest();
+
+            return;
+
             using var host = Microsoft.Extensions.Hosting.Host.CreateDefaultBuilder(args)
             .ConfigureServices((_, services) =>
                 services.AddAWSService<IAmazonEC2>()
@@ -33,8 +37,7 @@ namespace TestConsole
                     securityGroups.Add(securityGroup);
                 }
 
-                // Now print the security groups returned by the call to
-                // DescribeSecurityGroupsAsync.
+                // Now print the security groups returned by the call to DescribeSecurityGroupsAsync.
                 Console.WriteLine(
                     "Welcome to the EC2 Hello Service example. "
                     + Environment.NewLine
