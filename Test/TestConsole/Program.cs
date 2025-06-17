@@ -9,7 +9,9 @@ namespace TestConsole
     {
         private static async Task Main(string[] args)
         {
-            Crypt.CrpytTest();
+            ExcelReader.ReadExcelFile();
+
+            //Crypt.CrpytTest();
 
             return;
 
