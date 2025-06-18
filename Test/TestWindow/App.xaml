@@ -3,8 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:TestWindow"
              xmlns:hc="https://handyorg.github.io/handycontrol"
-             StartupUri="Views/DashBoardWindow.xaml">
-    <!--StartupUri="MainWindow.xaml">-->
+
+    StartupUri="MainWindow.xaml">
+    <!--StartupUri="Views/DashBoardWindow.xaml">-->
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
