@@ -122,4 +122,10 @@
     <ProjectReference Include="..\..\SmugControl\SmugControl.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="Views\MainWindow2.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+
 </Project>
