@@ -8,6 +8,14 @@ namespace TestConsole
     {
         public static void CrpytTest()
         {
+            string efun = "FE7BD31EC7C3F9152ECF20142DD6BB99";
+            int serverid = 20102;
+            string platform = "9006962647";
+            var md5result = MD5Crypt.CreateMD5($"{platform}{serverid}1232643{efun}");
+            //var md5result = MD5Crypt.CreateMD5("FE7BD31EC7C3F9152ECF20142DD6BB99900696264720102");
+
+            return;
+
             string privatekey = "fowplatformdiv1!";
             string textdata = "hllowpjhdatas";
 

@@ -1,0 +1,80 @@
+﻿<Window x:Class="TestWindow.Views.MainWindow2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TestWindow.Views"
+        mc:Ignorable="d"
+        Title="MMORPG Server Monitor" Height="800" Width="1200"
+        Background="#303030">
+    <DockPanel>
+        <!-- 상단 툴바 -->
+        <ToolBar DockPanel.Dock="Top">
+            <Button Content="All" />
+            <Button Content="Kick All" /> …
+        </ToolBar>
+
+        <!-- 중앙 스크롤 + 그룹 -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <!-- 예: Group 1 -->
+                <Expander Header="Group 1" IsExpanded="True">
+                    <ItemsControl ItemsSource="{Binding ServersInGroup1}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel IsItemsHost="True" Orientation="Horizontal"
+                           ItemWidth="180" ItemHeight="140" Margin="4" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border CornerRadius="8"
+                        BorderBrush="{Binding StatusColor}" BorderThickness="2"
+                        Background="#1E1E1E" Padding="8" Margin="4">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+                                        <StackPanel Orientation="Horizontal" Grid.Row="0">
+                                            <CheckBox IsChecked="{Binding IsSelected}" Margin="0,0,4,0" />
+                                            <TextBlock Text="{Binding Name}" FontWeight="Bold" Foreground="White" />
+                                            <Ellipse Width="12" Height="12" Fill="{Binding StatusColor}"
+                               Margin="4,0,0,0" />
+                                        </StackPanel>
+
+                                        <!-- CCU -->
+                                        <TextBlock Grid.Row="1" Text="{Binding CCU}"
+                               FontSize="36" FontWeight="Bold"
+                               HorizontalAlignment="Center" VerticalAlignment="Center" />
+
+                                        <!-- 리소스 바 -->
+                                        <StackPanel Grid.Row="2" Margin="0,8,0,0">
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <TextBlock Text="CPU" Width="30" Foreground="White" />
+                                                <ProgressBar Value="{Binding CpuUsage}" Height="10"
+                                     VerticalAlignment="Center" Margin="4,0" />
+                                                <TextBlock Text="{Binding CpuUsage, StringFormat={}{0:F0}%}"
+                                   Width="30" Foreground="White" HorizontalAlignment="Right" />
+                                            </StackPanel>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,2,0,0">
+                                                <TextBlock Text="MEM" Width="30" Foreground="White" />
+                                                <ProgressBar Value="{Binding MemUsage}" Height="10" Margin="4,0" />
+                                                <TextBlock Text="{Binding MemUsage, StringFormat={}{0:F0}%}"
+                                   Width="30" Foreground="White" HorizontalAlignment="Right" />
+                                            </StackPanel>
+                                            <!-- HDD 도 비슷하게 추가 -->
+                                        </StackPanel>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Expander>
+
+                <!-- 다른 Group도 같은 패턴 반복 -->
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>
