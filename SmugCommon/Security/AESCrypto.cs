@@ -4,19 +4,21 @@ using System.Text;
 
 namespace SmugCommon.Security
 {
-    public class AESCrypto
+    public sealed class AesApiKeyCryptoService
     {
-        // = Encoding.ASCII.GetBytes("d@wp3nd2");
         private readonly byte[] pbyteKey;
 
-        public AESCrypto(string privatekey)
+        public AesApiKeyCryptoService(string privatekey)
         {
-            Debug.Assert(false == string.IsNullOrEmpty(privatekey));
-            pbyteKey = Encoding.ASCII.GetBytes(privatekey);
+            //Debug.Assert(false == string.IsNullOrEmpty(privatekey));
+            //pbyteKey = Encoding.ASCII.GetBytes(privatekey);
+            using var sha = SHA256.Create();
+            pbyteKey = sha.ComputeHash(Encoding.UTF8.GetBytes(privatekey));
+
             Debug.Assert(null != pbyteKey, "API 키가 설정되지 않았습니다. SetAPIKey 메서드를 호출하여 키를 설정하세요.");
         }
 
-        [Obsolete("닷넷6.0 이상부터는 이거쓰지말라고 경고함")]
+        [Obsolete("닷넷6.0 이상부터는 불가")]
         public byte[] EncryptStringToBytes_AES(string plainText, byte[] key, byte[] IV)
         {
             if (plainText == null || plainText.Length <= 0)
@@ -60,7 +62,7 @@ namespace SmugCommon.Security
             return memoryStream.ToArray();
         }
 
-        [Obsolete("닷넷6.0 이상부터는 이거쓰지말라고 경고함")]
+        [Obsolete("닷넷6.0 이상부터는 불가")]
         public string DecryptBytesToString_AES(byte[] cipherText, byte[] key, byte[] IV)
         {
             if (cipherText == null || cipherText.Length == 0)
@@ -103,7 +105,7 @@ namespace SmugCommon.Security
             }
         }
 
-        [Obsolete("닷넷6.0 이상부터는 이거쓰지말라고 경고함")]
+        [Obsolete("닷넷6.0 이상부터는 불가")]
         public string EncryptString(string strKey)
         {
             Debug.Assert(null != pbyteKey);
@@ -123,7 +125,7 @@ namespace SmugCommon.Security
             return result;
         }
 
-        [Obsolete("닷넷6.0 이상부터는 이거쓰지말라고 경고함")]
+        [Obsolete("닷넷6.0 이상부터는 불가")]
         public string DecryptString(string strKey)
         {
             Debug.Assert(null != pbyteKey);
@@ -165,6 +167,20 @@ namespace SmugCommon.Security
             Buffer.BlockCopy(aes.IV, 0, result, 0, aes.IV.Length);
             Buffer.BlockCopy(cipherBytes, 0, result, aes.IV.Length, cipherBytes.Length);
             return result;
+        }
+
+        public string EncryptToString(string plainText)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(plainText));
+            return Convert.ToBase64String(Encrypt(plainText));
+        }
+
+        public string DecryptToString(string plainText)
+        {
+            Debug.Assert(!string.IsNullOrEmpty(plainText));
+
+            var combined = Convert.FromBase64String(plainText);
+            return Decrypt(combined);
         }
 
         public string Decrypt(byte[] encryptedData)
