@@ -34,7 +34,7 @@ namespace TestConsole
             string dec1 = aes1.Decrypt(returnEncrypt);
             string dec2 = aes1.Decrypt(returnEncrypt2);
 
-            AESCrypto aes2 = new AESCrypto(privatekey);
+            AesApiKeyCryptoService aes2 = new AesApiKeyCryptoService(privatekey);
             var result2 = aes2.Encrypt(textdata);
             Console.WriteLine($"{result2}");
 
