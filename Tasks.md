@@ -10,6 +10,8 @@
 ### Feature Task List
 - [ ] [C0100] Logger: `ILogger` 연동 콘솔 로거 기본 구현
   - [ ] [C0101] `log4net.config`의 파일 로그를 5MB 기준으로 롤링하고 `fileName_N.log` 패턴으로 백업되도록 설정
+    - desc1
+    - desc2
   - [ ] [C0102] 콘솔/파일 로그 포맷을 공통 정책으로 정리하고 카테고리명, 예외, EventId 출력 규칙 통일
   - [ ] [C0103] `SmugLoggerConfiguration`에 최소 로그 레벨, 색상 맵 기본값, EventId 필터 기본값 제공
   - [ ] [C0104] `Microsoft.Extensions.Logging` + log4net 초기화 헬퍼 추가
@@ -50,6 +52,9 @@
   - [ ] [C0605] `fNative`의 콘솔 위치 제어/덤프 생성 기능을 옵션 기반으로 정리
   - [ ] [C0606] `SmugglerTDDs`에 유틸 함수 테스트 추가
   - [ ] [C0607] `TestConsole`에 유틸 사용 예제 추가
+  - [ ] [C0608] 프로그램 비정상 종료 시 dump 생성을 위한 `AppDomain`, `TaskScheduler`, 프로세스 예외 hook 구조 정리
+  - [ ] [C0609] dump 파일명, 저장 경로, dump 종류(mini/full), 보관 정책 표준화
+  - [ ] [C0610] `SmugglerTDDs` 또는 검증용 샘플에서 crash dump 생성 흐름 확인 전략 정리
 - [ ] [C0700] DataStructure: 커스텀 자료구조 모듈 추가
   - [ ] [C0701] 범용 `Queue<T>` 래퍼 또는 확장 큐 구조 설계
   - [ ] [C0702] `Enqueue`, `Dequeue`, `Peek`, `Clear`, `Count` 등 기본 계약 정의
@@ -119,13 +124,41 @@
 
 ## SmugglerNetwork
 - SmugglerNetwork에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되고 `TestConsole`에 예제가 추가된다.
-- Common 프로젝트를 참조하여 추가적으로 소켓 서버의 초안을 구현하는 프로젝트. 이후 전용 서버들은 이 서버를 참조하여 구현한다.
+- Common 프로젝트를 참조하여 TCP/UDP 멀티스레드 비동기 서버의 초안을 구현하는 프로젝트. 이후 전용 서버들은 이 서버를 참조하여 구현한다.
 
 ### Feature Task List
-- [ ] [N0100] TCP Server: TCP socket을 이용한 비동기 서버
-  - [ ] [N0101] feature 1
-  - [ ] [N0102] feature 2
-- [ ] [N0200] UDP Server: UDP socket을 이용한 비동기 서버(ENet Library)
-  - [ ] [N0201] feature 1
-  - [ ] [N0202] feature 2
-  
+- [ ] [N0100] Base: 비동기 멀티스레드 서버 공통 기반 모듈 추가
+  - [ ] [N0101] 서버 수명주기(`Start`, `Stop`, `Dispose`)와 취소 토큰을 포함한 공통 `ServerBase` 설계
+  - [ ] [N0102] accept/receive/send/logic 처리 분리를 위한 worker thread 또는 task scheduler 구조 정리
+  - [ ] [N0103] 세션/peer 공통 상태를 담는 connection context base 클래스 설계
+  - [ ] [N0104] 패킷 입력/출력을 위한 thread-safe input queue, output queue 구조 설계
+  - [ ] [N0105] 재사용 가능한 버퍼 풀, packet buffer manager, segment 관리 기능 추가
+  - [ ] [N0106] Dapper 기반 DB 커넥션 풀 또는 DB 작업 dispatcher 구조 정리
+  - [ ] [N0107] 패킷 dispatcher, handler registry, 공통 예외/로그 정책 추가
+  - [ ] [N0108] 서버 운영 통계를 위한 statistics collector 구조 설계
+  - [ ] [N0109] 접속 수, 세션 수, 송수신 바이트, packet per second, queue depth 등 핵심 메트릭 정의
+  - [ ] [N0110] 주기적 통계 스냅샷, 로그 출력, 외부 모니터링 연계용 exporter hook 설계
+  - [ ] [N0111] `SmugglerTDDs`에 큐/버퍼/dispatcher/base lifecycle/통계 집계 테스트 추가
+  - [ ] [N0112] `TestConsole`에 base server pipeline 및 통계 출력 예제 추가
+- [ ] [N0200] TCP Server: TCP socket 기반 비동기 멀티스레드 서버 구현
+  - [ ] [N0201] `SocketAsyncEventArgs` 또는 async socket 기반 listener/accept 루프 구현
+  - [ ] [N0202] 클라이언트 세션 생성, 연결 종료 감지, 세션 정리 로직 구현
+  - [ ] [N0203] 길이 헤더 기반 또는 구분자 기반 packet framing 구조 설계
+  - [ ] [N0204] 송신 큐 기반 비동기 send pipeline과 backpressure 처리 추가
+  - [ ] [N0205] heartbeat, idle timeout, disconnect, graceful shutdown 정책 정리
+  - [ ] [N0206] protobuf, FlatBuffers, MessagePack 등으로 확장 가능한 packet serializer adapter 인터페이스 설계
+  - [ ] [N0207] 기본 binary codec 외에 serializer 교체 샘플 구현
+  - [ ] [N0208] `SmugglerTDDs`에 loopback 기반 접속/송수신/packet framing 테스트 추가
+  - [ ] [N0209] `TestConsole`에 TCP echo/chat 또는 command server 예제 추가
+- [ ] [N0300] UDP Server: ENet 기반 비동기 멀티스레드 서버 구현
+  - [ ] [N0301] ENet 라이브러리 도입 및 프로젝트 참조/배포 정책 정리
+  - [ ] [N0302] ENet host 초기화, peer 관리, channel 설정, poll/event loop 구조 구현
+  - [ ] [N0303] reliable/unreliable packet 전송 정책과 채널 분리 규칙 정리
+  - [ ] [N0304] 세션 매핑, peer 상태 추적, 연결/해제 이벤트 처리 추가
+  - [ ] [N0305] TCP와 공용으로 사용할 수 있는 packet serializer adapter 재사용 구조 정리
+  - [ ] [N0306] ENet 이벤트 수신 thread와 logic thread 분리 구조 검토 및 구현
+  - [ ] [N0307] 재전송, 순서 보장, MTU, fragmentation 관련 운영 옵션 정리
+  - [ ] [N0308] `SmugglerTDDs`에 ENet 래퍼/이벤트 처리 테스트 추가
+  - [ ] [N0309] `TestConsole`에 UDP/ENet 기반 패킷 송수신 예제 추가
+
+
