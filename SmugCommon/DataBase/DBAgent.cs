@@ -1,6 +1,5 @@
-﻿namespace SmugCommon.DataBase
+﻿namespace Smuggler.Common.DataBase;
+
+public interface IDBAgent
 {
-    public interface IDBAgent
-    {
-    }
 }

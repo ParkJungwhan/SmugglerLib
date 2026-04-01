@@ -1,7 +1,7 @@
 ﻿using System.Globalization;
 using System.Windows.Data;
 
-namespace SmugControl.Converters;
+namespace Smuggler.Control.Converters;
 
 public sealed class SelectedEqualsItemConverter : IMultiValueConverter
 {

@@ -4,7 +4,7 @@ internal class Program
 {
     private static async Task Main(string[] args)
     {
-        ExcelReader.ReadExcelFile();
+        //ExcelReader.ReadExcelFile();
 
         //Crypt.CrpytTest();
 

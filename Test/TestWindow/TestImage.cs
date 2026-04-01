@@ -1,12 +1,11 @@
-﻿using SmugControl;
+﻿using Smuggler.Control;
 
-namespace TestWindow
+namespace TestWindow;
+
+public class TestImage : IconManagerBase
 {
-    public class TestImage : IconManagerBase
+    public override void LoadImage()
     {
-        public override void LoadImage()
-        {
-            Initialize(@"Data\Images", "Item_Icon_", "png", 1, 1, 89, 89, 11, 11);
-        }
+        Initialize(@"Data\Images", "Item_Icon_", "png", 1, 1, 89, 89, 11, 11);
     }
 }

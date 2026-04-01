@@ -1,7 +1,7 @@
 ﻿using MemoryPack;
-using SmugCommon.Interfaces;
+using Smuggler.Common.Interfaces;
 
-namespace SmugCommon.DataProcess;
+namespace Smuggler.Common.DataProcess;
 
 public class MemoryPackSerializerImpl : ISerializer
 {

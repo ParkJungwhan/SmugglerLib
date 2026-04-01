@@ -1,6 +1,6 @@
 ﻿using ClosedXML.Excel;
 
-namespace SmugCommon.ExcelLib;
+namespace Smuggler.Common.ExcelLib;
 
 public class XlsxClosedParser
 {

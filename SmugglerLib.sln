@@ -2,11 +2,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.37111.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmugCommon", "SmugCommon\SmugCommon.csproj", "{F6E5289B-4C8D-4BB2-928D-2557A523B099}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smugggler.Common", "SmugCommon\Smugggler.Common.csproj", "{F6E5289B-4C8D-4BB2-928D-2557A523B099}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C8D5274F-AC00-46C7-1F8D-E88E81087A52}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmugControl", "SmugControl\SmugControl.csproj", "{7FAD9954-3D68-4219-8057-BC93B8450393}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smuggler.Control", "SmugControl\Smuggler.Control.csproj", "{7FAD9954-3D68-4219-8057-BC93B8450393}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAPI", "Test\TestAPI\TestAPI.csproj", "{927EA379-F714-7F0E-CE1C-C9A5E106FE62}"
 EndProject

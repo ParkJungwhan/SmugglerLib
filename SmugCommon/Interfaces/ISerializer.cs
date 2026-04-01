@@ -1,4 +1,4 @@
-﻿namespace SmugCommon.Interfaces;
+﻿namespace Smuggler.Common.Interfaces;
 
 public interface ISerializer
 {

@@ -1,78 +1,77 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace SmugCommon
+namespace Smuggler.Common;
+
+public static class SmugLoggerExtensions
 {
-    public static class SmugLoggerExtensions
+    public static ILoggingBuilder AddSmugLogger(
+            this ILoggingBuilder builder,
+            Func<SmugLoggerConfiguration> getCurrentConfig) =>
+        builder.AddProvider(new SmugLoggerProvider(getCurrentConfig));
+}
+
+public class SmugLoggerProvider : ILoggerProvider
+{
+    private readonly Func<SmugLoggerConfiguration> _getCurrentConfig;
+
+    public SmugLoggerProvider(Func<SmugLoggerConfiguration> getCurrentConfig)
     {
-        public static ILoggingBuilder AddSmugLogger(
-                this ILoggingBuilder builder,
-                Func<SmugLoggerConfiguration> getCurrentConfig) =>
-            builder.AddProvider(new SmugLoggerProvider(getCurrentConfig));
+        _getCurrentConfig = getCurrentConfig;
     }
 
-    public class SmugLoggerProvider : ILoggerProvider
+    public ILogger CreateLogger(string categoryName)
     {
-        private readonly Func<SmugLoggerConfiguration> _getCurrentConfig;
-
-        public SmugLoggerProvider(Func<SmugLoggerConfiguration> getCurrentConfig)
-        {
-            _getCurrentConfig = getCurrentConfig;
-        }
-
-        public ILogger CreateLogger(string categoryName)
-        {
-            return new SmugLogger(categoryName, _getCurrentConfig);
-        }
-
-        public void Dispose()
-        {
-            // No resources to dispose
-        }
+        return new SmugLogger(categoryName, _getCurrentConfig);
     }
 
-    public class SmugLogger : ILogger
+    public void Dispose()
     {
-        private readonly string _name;
-        private readonly Func<SmugLoggerConfiguration> _getCurrentConfig;
+        // No resources to dispose
+    }
+}
 
-        public SmugLogger(
-                string name,
-                Func<SmugLoggerConfiguration> getCurrentConfig) =>
-        (_name, _getCurrentConfig) = (name, getCurrentConfig);
+public class SmugLogger : ILogger
+{
+    private readonly string _name;
+    private readonly Func<SmugLoggerConfiguration> _getCurrentConfig;
 
-        public IDisposable? BeginScope<TState>(TState state) where TState : notnull => default;
+    public SmugLogger(
+            string name,
+            Func<SmugLoggerConfiguration> getCurrentConfig) =>
+    (_name, _getCurrentConfig) = (name, getCurrentConfig);
 
-        public bool IsEnabled(LogLevel logLevel) => _getCurrentConfig().LogLevelToColorMap.ContainsKey(logLevel);
+    public IDisposable? BeginScope<TState>(TState state) where TState : notnull => default;
 
-        public void Log<TState>(
-        LogLevel logLevel,
-        EventId eventId,
-        TState state,
-        Exception? exception,
-        Func<TState, Exception?, string> formatter)
+    public bool IsEnabled(LogLevel logLevel) => _getCurrentConfig().LogLevelToColorMap.ContainsKey(logLevel);
+
+    public void Log<TState>(
+    LogLevel logLevel,
+    EventId eventId,
+    TState state,
+    Exception? exception,
+    Func<TState, Exception?, string> formatter)
+    {
+        if (!IsEnabled(logLevel))
         {
-            if (!IsEnabled(logLevel))
-            {
-                return;
-            }
+            return;
+        }
 
-            SmugLoggerConfiguration config = _getCurrentConfig();
-            if (config.EventId == 0 || config.EventId == eventId.Id)
-            {
-                ConsoleColor originalColor = Console.ForegroundColor;
+        SmugLoggerConfiguration config = _getCurrentConfig();
+        if (config.EventId == 0 || config.EventId == eventId.Id)
+        {
+            ConsoleColor originalColor = Console.ForegroundColor;
 
-                Console.ForegroundColor = config.LogLevelToColorMap[logLevel];
-                Console.WriteLine($"[{eventId.Id,2}: {logLevel,-12}]");
+            Console.ForegroundColor = config.LogLevelToColorMap[logLevel];
+            Console.WriteLine($"[{eventId.Id,2}: {logLevel,-12}]");
 
-                Console.ForegroundColor = originalColor;
-                Console.Write($"     {_name} - ");
+            Console.ForegroundColor = originalColor;
+            Console.Write($"     {_name} - ");
 
-                Console.ForegroundColor = config.LogLevelToColorMap[logLevel];
-                Console.Write($"{formatter(state, exception)}");
+            Console.ForegroundColor = config.LogLevelToColorMap[logLevel];
+            Console.Write($"{formatter(state, exception)}");
 
-                Console.ForegroundColor = originalColor;
-                Console.WriteLine();
-            }
+            Console.ForegroundColor = originalColor;
+            Console.WriteLine();
         }
     }
 }
