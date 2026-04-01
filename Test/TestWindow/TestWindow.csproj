@@ -119,7 +119,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SmugControl\Smuggler.Control.csproj" />
+    <ProjectReference Include="..\..\SmugglerControl\Smuggler.Control.csproj" />
   </ItemGroup>
 
   <ItemGroup>

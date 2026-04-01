@@ -3,11 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.37111.16
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smugggler.Common", "SmugCommon\Smugggler.Common.csproj", "{F6E5289B-4C8D-4BB2-928D-2557A523B099}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C8D5274F-AC00-46C7-1F8D-E88E81087A52}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smuggler.Control", "SmugControl\Smuggler.Control.csproj", "{7FAD9954-3D68-4219-8057-BC93B8450393}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAPI", "Test\TestAPI\TestAPI.csproj", "{927EA379-F714-7F0E-CE1C-C9A5E106FE62}"
 EndProject
@@ -24,20 +20,18 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루�
 		Tasks.md = Tasks.md
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smuggler.Common", "SmugglerCommon\Smuggler.Common.csproj", "{24D4F49E-7C5A-EDF5-48F2-51215E60F3A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smuggler.Control", "SmugglerControl\Smuggler.Control.csproj", "{B24AC120-61E3-3607-DC23-6D9A8F76820E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smuggler.Network", "SmugglerNetwork\Smuggler.Network.csproj", "{F4D16FF6-C52C-44D6-BE12-13ED83BE94BA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F6E5289B-4C8D-4BB2-928D-2557A523B099}.Debug|Any CPU.ActiveCfg = Debug|x64
-		{F6E5289B-4C8D-4BB2-928D-2557A523B099}.Debug|Any CPU.Build.0 = Debug|x64
-		{F6E5289B-4C8D-4BB2-928D-2557A523B099}.Release|Any CPU.ActiveCfg = Release|x64
-		{F6E5289B-4C8D-4BB2-928D-2557A523B099}.Release|Any CPU.Build.0 = Release|x64
-		{7FAD9954-3D68-4219-8057-BC93B8450393}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7FAD9954-3D68-4219-8057-BC93B8450393}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7FAD9954-3D68-4219-8057-BC93B8450393}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7FAD9954-3D68-4219-8057-BC93B8450393}.Release|Any CPU.Build.0 = Release|Any CPU
 		{927EA379-F714-7F0E-CE1C-C9A5E106FE62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{927EA379-F714-7F0E-CE1C-C9A5E106FE62}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{927EA379-F714-7F0E-CE1C-C9A5E106FE62}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -58,6 +52,18 @@ Global
 		{FC2745CE-1B3B-4B23-962E-25E38D788D1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC2745CE-1B3B-4B23-962E-25E38D788D1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC2745CE-1B3B-4B23-962E-25E38D788D1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24D4F49E-7C5A-EDF5-48F2-51215E60F3A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24D4F49E-7C5A-EDF5-48F2-51215E60F3A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24D4F49E-7C5A-EDF5-48F2-51215E60F3A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24D4F49E-7C5A-EDF5-48F2-51215E60F3A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B24AC120-61E3-3607-DC23-6D9A8F76820E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B24AC120-61E3-3607-DC23-6D9A8F76820E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B24AC120-61E3-3607-DC23-6D9A8F76820E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B24AC120-61E3-3607-DC23-6D9A8F76820E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4D16FF6-C52C-44D6-BE12-13ED83BE94BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4D16FF6-C52C-44D6-BE12-13ED83BE94BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4D16FF6-C52C-44D6-BE12-13ED83BE94BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4D16FF6-C52C-44D6-BE12-13ED83BE94BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

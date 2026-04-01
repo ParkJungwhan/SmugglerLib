@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\SmugCommon\Smugggler.Common.csproj" />
+    <ProjectReference Include="..\..\SmugglerCommon\Smuggler.Common.csproj" />
   </ItemGroup>
 
 </Project>

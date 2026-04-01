@@ -4,7 +4,8 @@
 - 우선순위가 높은 항목부터 진행하며, 완료 시 체크 상태를 갱신한다.
 
 ## SmugglerCommon
-SmugglerCommon에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되고 `TestConsole` 또는 `TestAPI`에 예제가 추가된다.
+- SmugglerCommon에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되고 `TestConsole` 또는 `TestAPI`에 예제가 추가된다.
+- C# Common 프로젝트는 모든 라이브러리 프로젝트가 공용으로 사용할 수 있는 프로젝트
 
 ### Feature Task List
 - [ ] [C0100] Logger: `ILogger` 연동 콘솔 로거 기본 구현
@@ -56,9 +57,34 @@ SmugglerCommon에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되�
   - [ ] [C0704] 멀티스레드 환경이 필요한 경우 thread-safe 큐 분리 설계
   - [ ] [C0705] `SmugglerTDDs`에 큐 동작, 빈 큐 예외, 순서 보장 테스트 추가
   - [ ] [C0706] `TestConsole`에 큐 사용 예제 추가
+- [ ] [C0800] Network: TCP/UDP 소켓 공용 모듈 추가
+  - [ ] [C0801] TCP 클라이언트 연결/재연결/종료 래퍼 설계
+  - [ ] [C0802] TCP 서버 세션 관리, 송수신 이벤트, 연결 상태 관리 기능 추가
+  - [ ] [C0803] UDP 송신/수신, 브로드캐스트, 포트 바인딩 보조 기능 추가
+  - [ ] [C0804] 패킷 직렬화 계층과 연동할 수 있는 바이트/메시지 처리 구조 정의
+  - [ ] [C0805] 타임아웃, 취소 토큰, 예외, 로깅 정책 공통화
+  - [ ] [C0806] `SmugglerTDDs`에 로컬 루프백 기반 소켓 테스트 추가
+  - [ ] [C0807] `TestConsole`에 TCP/UDP 송수신 예제 추가
+- [ ] [C0900] FileTransfer: FTP/SFTP 서버 및 클라이언트 기능 추가
+  - [ ] [C0901] FTP 클라이언트 연결, 업로드, 다운로드, 디렉터리 조회 기능 설계
+  - [ ] [C0902] SFTP 클라이언트 기능 도입을 위한 패키지 및 인증 방식 검토
+  - [ ] [C0903] 파일 존재 확인, 디렉터리 생성, overwrite 정책, 재시도 정책 정리
+  - [ ] [C0904] 서버 기능이 실제로 필요한지 범위를 정리하고 필요 시 경량 서버 래퍼 설계
+  - [ ] [C0905] 진행률, 취소, 타임아웃, 예외, 로그 처리 공통화
+  - [ ] [C0906] `SmugglerTDDs`에 전송 경로 및 예외 처리 테스트 추가
+  - [ ] [C0907] `TestConsole`에 FTP/SFTP 업로드/다운로드 예제 추가
+- [ ] [C1000] Http: REST API 호출 편의성 모듈 추가
+  - [ ] [C1001] `HttpClient` 래퍼 또는 API 클라이언트 베이스 클래스 설계
+  - [ ] [C1002] GET/POST/PUT/DELETE 요청, 쿼리스트링, 헤더 설정 편의 메서드 추가
+  - [ ] [C1003] JSON 직렬화/역직렬화와 공통 응답 모델 처리 구조 정리
+  - [ ] [C1004] 인증 토큰, 공통 헤더, 타임아웃, 재시도 정책 적용 구조 추가
+  - [ ] [C1005] 실패 응답 처리, 예외 메시지, 로깅 규칙 표준화
+  - [ ] [C1006] `SmugglerTDDs`에 Mock HTTP 기반 호출 테스트 추가
+  - [ ] [C1007] `TestAPI` 또는 `TestConsole`에 REST API 호출 예제 추가
 
 ## SmugglerControl
-SmugglerControl에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되고 `TestWindow`에 예제가 추가된다.
+- SmugglerControl에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되고 `TestWindow`에 예제가 추가된다.
+- C# Windows용 라이브러리(WPF 프레임워크)에 사용되는 가종 UI용 라이브러리 들의 추가적인 기능들을 구현한 프로젝트
 
 ### Feature Task List
 - [ ] [W0100] IconManager: 이미지 시트 분할 및 아이콘 조회 기본 구현
@@ -90,3 +116,16 @@ SmugglerControl에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되
   - [ ] [W0505] 필요한 경우 `ObservableRecipient`, validation 계열 기능 사용 기준 정리
   - [ ] [W0506] `SmugglerTDDs`에 CommunityToolkit ViewModel 테스트 추가
   - [ ] [W0507] `TestWindow`에 간단한 MVVM 데모 화면 추가
+
+## SmugglerNetwork
+- SmugglerNetwork에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되고 `TestConsole`에 예제가 추가된다.
+- Common 프로젝트를 참조하여 추가적으로 소켓 서버의 초안을 구현하는 프로젝트. 이후 전용 서버들은 이 서버를 참조하여 구현한다.
+
+### Feature Task List
+- [ ] [N0100] TCP Server: TCP socket을 이용한 비동기 서버
+  - [ ] [N0101] feature 1
+  - [ ] [N0102] feature 2
+- [ ] [N0200] UDP Server: UDP socket을 이용한 비동기 서버(ENet Library)
+  - [ ] [N0201] feature 1
+  - [ ] [N0202] feature 2
+  
