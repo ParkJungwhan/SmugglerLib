@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using ExcelDataReader;
 
-namespace SmugOpenSource.ExcelLIb
+namespace SmugCommon.ExcelLIb
 {
     public class XlsxFileReader
     {
