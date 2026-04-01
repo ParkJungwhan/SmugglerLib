@@ -1,23 +1,92 @@
 # Tasks
-- SmugglerCommon이 작성해야할 기능들과 이미 구현된 기능들에 대한 목록을 정리한 곳
-- 
+- SmugglerLib에 포함된 라이브러리 기능과 향후 추가/보완해야 할 기능을 정리한다.
+- 기능 구현 완료 조건은 `SmugglerTDDs`에 xUnit 테스트 추가, 대응 `Test[Project]` 예제 추가, 전체 빌드 성공까지를 기준으로 한다.
+- 우선순위가 높은 항목부터 진행하며, 완료 시 체크 상태를 갱신한다.
 
 ## SmugglerCommon
-SmugglerCommon에 구현된 기능은 SmugglerTDDs에 TDD 모듈이 작성되고 TestConsole에 예제가 추가된다.
+SmugglerCommon에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되고 `TestConsole` 또는 `TestAPI`에 예제가 추가된다.
 
 ### Feature Task List
-- [x] [C0100] Logger: Log4Net을 통한 로그 컴포넌트 구현
-  - [ ] [C0101] feature 1: feature 1 spec
-  - [ ] [C0102] feature 2: feature 2 spec
-- [ ] [C0200] Logger: Log4Net을 통한 로그 컴포넌트 구현
-  - [ ] [C0201] feature 1: feature 1 spec
+- [x] [C0100] Logger: `ILogger` 연동 콘솔 로거 기본 구현
+  - [ ] [C0101] `log4net.config`의 파일 로그를 5MB 기준으로 롤링하고 `fileName_N.log` 패턴으로 백업되도록 설정
+  - [ ] [C0102] 콘솔/파일 로그 포맷을 공통 정책으로 정리하고 카테고리명, 예외, EventId 출력 규칙 통일
+  - [ ] [C0103] `SmugLoggerConfiguration`에 최소 로그 레벨, 색상 맵 기본값, EventId 필터 기본값 제공
+  - [ ] [C0104] `Microsoft.Extensions.Logging` + log4net 초기화 헬퍼 추가
+  - [ ] [C0105] `SmugglerTDDs`에 로거 설정 및 필터 동작 검증 테스트 추가
+  - [ ] [C0106] `TestConsole`에 로그 출력/롤링 예제 추가
+- [x] [C0200] Database: SQLite/Dapper 에이전트 기본 클래스 작성
+  - [ ] [C0201] SQLite 연결 확인 쿼리를 현재의 `SELECT now()`에서 SQLite 호환 쿼리로 수정
+  - [ ] [C0202] DB 파일 경로 검증, 연결 문자열 생성, 연결 실패 예외 메시지 표준화
+  - [ ] [C0203] 공통 `Query`, `QuerySingle`, `Execute` 래퍼 메서드 추가
+  - [ ] [C0204] 트랜잭션 처리와 예외 로깅 연계 기능 추가
+  - [ ] [C0205] `IDBAgent` 인터페이스에 최소 계약 정의
+  - [ ] [C0206] `SmugglerTDDs`에 SQLite 기반 연결/조회 테스트 추가
+  - [ ] [C0207] `TestConsole` 또는 `TestAPI`에 DB 에이전트 사용 예제 추가
+- [x] [C0300] Serialization: MemoryPack 직렬화 구현 추가
+  - [ ] [C0301] `ISerializer` 기준 null 입력, 빈 바이트 배열 입력 정책 정리
+  - [ ] [C0302] 제네릭 직렬화/역직렬화 실패 시 예외 메시지 표준화
+  - [ ] [C0303] 파일 저장/로드 또는 스트림 기반 보조 메서드 추가 여부 결정 및 구현
+  - [ ] [C0304] `SmugglerTDDs`에 직렬화 round-trip 테스트 추가
+  - [ ] [C0305] `TestConsole`에 직렬화 사용 예제 추가
+- [x] [C0400] Security: AES/RSA/MD5 보안 유틸 기본 구현
+  - [ ] [C0401] `AesApiKeyCryptoService`의 obsolete 메서드 정리 또는 레거시 호환 계층 분리
+  - [ ] [C0402] AES 암복호화 입력값 검증, 키 길이 정책, 예외 처리 강화
+  - [ ] [C0403] RSA XML 키 기반 암복호화 외에 현대적인 키 포맷 지원 여부 검토
+  - [ ] [C0404] MD5 유틸의 사용 범위를 체크섬 용도로 제한하고 보안 경고 주석 또는 대체 해시 가이드 추가
+  - [ ] [C0405] `SmugglerTDDs`에 AES/RSA/MD5 테스트 케이스 추가
+  - [ ] [C0406] `TestConsole`에 암복호화 예제 추가
+- [ ] [C0500] ExcelDataReader 기반 Excel 로더 모듈 추가
+  - [ ] [C0501] Workbook/Sheet 로딩 래퍼 클래스 설계
+  - [ ] [C0502] 헤더 행 기준 컬럼 매핑 및 행 모델 변환 기능 추가
+  - [ ] [C0503] 숫자/날짜/null 셀 변환 정책 정의
+  - [ ] [C0504] `SmugglerTDDs`에 샘플 Excel 파일 기반 테스트 추가
+  - [ ] [C0505] `TestConsole`에 Excel 읽기 예제 추가
+- [x] [C0600] Utility: 확장 메서드 및 시스템 유틸 기본 구현
+  - [ ] [C0601] `ExMethod`의 날짜/시간 포맷 확장 메서드 명명 규칙 정리
+  - [ ] [C0602] `FullJoinDistinct`의 null 안정성 및 제네릭 사용 예제 보강
+  - [ ] [C0603] `MathMethod`의 공개 범위와 실제 사용처를 기준으로 유지/삭제 결정
+  - [ ] [C0604] `fGlobalization`의 null 반환 가능성 처리 및 ISO 코드 조회 보완
+  - [ ] [C0605] `fNative`의 콘솔 위치 제어/덤프 생성 기능을 옵션 기반으로 정리
+  - [ ] [C0606] `SmugglerTDDs`에 유틸 함수 테스트 추가
+  - [ ] [C0607] `TestConsole`에 유틸 사용 예제 추가
+- [ ] [C0700] DataStructure: 커스텀 자료구조 모듈 추가
+  - [ ] [C0701] 범용 `Queue<T>` 래퍼 또는 확장 큐 구조 설계
+  - [ ] [C0702] `Enqueue`, `Dequeue`, `Peek`, `Clear`, `Count` 등 기본 계약 정의
+  - [ ] [C0703] 고정 크기 큐, 순환 큐 또는 중복 방지 큐 중 실제 활용도가 높은 옵션 검토
+  - [ ] [C0704] 멀티스레드 환경이 필요한 경우 thread-safe 큐 분리 설계
+  - [ ] [C0705] `SmugglerTDDs`에 큐 동작, 빈 큐 예외, 순서 보장 테스트 추가
+  - [ ] [C0706] `TestConsole`에 큐 사용 예제 추가
 
 ## SmugglerControl
-SmugglerControl에 구현된 기능은 SmugglerTDDs에 TDD 모듈이 작성되고 TestWindow에 예제가 추가된다.
+SmugglerControl에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되고 `TestWindow`에 예제가 추가된다.
 
 ### Feature Task List
-- [x] [W0100] ImageManager
-  - [ ] [W0101] feature 1: feature 1 spec
-  - [ ] [W0102] feature 2: feature 2 spec
-- [ ] [W0200] Window control feature 1 
-- [ ] [W0300] Window control feature 2
+- [x] [W0100] IconManager: 이미지 시트 분할 및 아이콘 조회 기본 구현
+  - [ ] [W0101] 잘못된 경로, 잘못된 파일명, 범위 초과 인덱스에 대한 예외/기본값 정책 정리
+  - [ ] [W0102] 기본 이미지(`Xbox`) 로딩 방식 및 fallback 아이콘 정책 구현
+  - [ ] [W0103] 아이콘 캐시 초기화/재로드 기능 추가
+  - [ ] [W0104] `SmugglerTDDs`에 아이콘 인덱싱 로직 테스트 추가
+  - [ ] [W0105] `TestWindow`에 아이콘 매니저 사용 예제 추가
+- [x] [W0200] Converter: 선택 상태 및 상태값 변환기 기본 구현
+  - [ ] [W0201] `BoolToBrushConverter` 네이밍을 실제 동작에 맞게 정리하거나 범용 상태 변환기로 확장
+  - [ ] [W0202] 선택 비교/필터 변환기의 null 처리와 컬렉션 변경 대응 검증
+  - [ ] [W0203] 브러시/상태 매핑을 하드코딩 대신 옵션화할 수 있는 구조 검토
+  - [ ] [W0204] `SmugglerTDDs`에 컨버터 테스트 추가
+  - [ ] [W0205] `TestWindow`에 컨버터 바인딩 예제 추가
+- [ ] [W0300] HandyControls 기반 공통 WPF Helper 모듈 추가
+  - [ ] [W0301] 메시지 박스, 다이얼로그, 로딩 인디케이터 공통 래퍼 설계
+  - [ ] [W0302] 테마/색상/리소스 사전 초기화 헬퍼 추가
+  - [ ] [W0303] `TestWindow` 샘플 화면으로 동작 검증
+- [ ] [W0400] ViewModel 바인딩 보조 기능 추가
+  - [ ] [W0401] `INotifyPropertyChanged` 베이스 클래스 또는 소스 생성기 도입 검토
+  - [ ] [W0402] `ICommand`/AsyncCommand 공통 구현 추가
+  - [ ] [W0403] `SmugglerTDDs`에 ViewModel 유틸 테스트 추가
+  - [ ] [W0404] `TestWindow`에 MVVM 샘플 추가
+- [ ] [W0500] CommunityToolkit 기반 MVVM 공통 구조 추가
+  - [ ] [W0501] `CommunityToolkit.Mvvm` 패키지 도입 및 참조 정책 정리
+  - [ ] [W0502] `ObservableObject` 기반 공통 ViewModel 구조 설계
+  - [ ] [W0503] `RelayCommand`/`AsyncRelayCommand`를 사용하는 명령 패턴 샘플 추가
+  - [ ] [W0504] `WeakReferenceMessenger` 기반 화면 간 메시징 구조 검토
+  - [ ] [W0505] 필요한 경우 `ObservableRecipient`, validation 계열 기능 사용 기준 정리
+  - [ ] [W0506] `SmugglerTDDs`에 CommunityToolkit ViewModel 테스트 추가
+  - [ ] [W0507] `TestWindow`에 간단한 MVVM 데모 화면 추가
