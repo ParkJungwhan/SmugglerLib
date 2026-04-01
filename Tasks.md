@@ -7,14 +7,14 @@
 SmugglerCommon에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되고 `TestConsole` 또는 `TestAPI`에 예제가 추가된다.
 
 ### Feature Task List
-- [x] [C0100] Logger: `ILogger` 연동 콘솔 로거 기본 구현
+- [ ] [C0100] Logger: `ILogger` 연동 콘솔 로거 기본 구현
   - [ ] [C0101] `log4net.config`의 파일 로그를 5MB 기준으로 롤링하고 `fileName_N.log` 패턴으로 백업되도록 설정
   - [ ] [C0102] 콘솔/파일 로그 포맷을 공통 정책으로 정리하고 카테고리명, 예외, EventId 출력 규칙 통일
   - [ ] [C0103] `SmugLoggerConfiguration`에 최소 로그 레벨, 색상 맵 기본값, EventId 필터 기본값 제공
   - [ ] [C0104] `Microsoft.Extensions.Logging` + log4net 초기화 헬퍼 추가
   - [ ] [C0105] `SmugglerTDDs`에 로거 설정 및 필터 동작 검증 테스트 추가
   - [ ] [C0106] `TestConsole`에 로그 출력/롤링 예제 추가
-- [x] [C0200] Database: SQLite/Dapper 에이전트 기본 클래스 작성
+- [ ] [C0200] Database: SQLite/Dapper 에이전트 기본 클래스 작성
   - [ ] [C0201] SQLite 연결 확인 쿼리를 현재의 `SELECT now()`에서 SQLite 호환 쿼리로 수정
   - [ ] [C0202] DB 파일 경로 검증, 연결 문자열 생성, 연결 실패 예외 메시지 표준화
   - [ ] [C0203] 공통 `Query`, `QuerySingle`, `Execute` 래퍼 메서드 추가
@@ -22,13 +22,13 @@ SmugglerCommon에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되�
   - [ ] [C0205] `IDBAgent` 인터페이스에 최소 계약 정의
   - [ ] [C0206] `SmugglerTDDs`에 SQLite 기반 연결/조회 테스트 추가
   - [ ] [C0207] `TestConsole` 또는 `TestAPI`에 DB 에이전트 사용 예제 추가
-- [x] [C0300] Serialization: MemoryPack 직렬화 구현 추가
+- [ ] [C0300] Serialization: MemoryPack 직렬화 구현 추가
   - [ ] [C0301] `ISerializer` 기준 null 입력, 빈 바이트 배열 입력 정책 정리
   - [ ] [C0302] 제네릭 직렬화/역직렬화 실패 시 예외 메시지 표준화
   - [ ] [C0303] 파일 저장/로드 또는 스트림 기반 보조 메서드 추가 여부 결정 및 구현
   - [ ] [C0304] `SmugglerTDDs`에 직렬화 round-trip 테스트 추가
   - [ ] [C0305] `TestConsole`에 직렬화 사용 예제 추가
-- [x] [C0400] Security: AES/RSA/MD5 보안 유틸 기본 구현
+- [ ] [C0400] Security: AES/RSA/MD5 보안 유틸 기본 구현
   - [ ] [C0401] `AesApiKeyCryptoService`의 obsolete 메서드 정리 또는 레거시 호환 계층 분리
   - [ ] [C0402] AES 암복호화 입력값 검증, 키 길이 정책, 예외 처리 강화
   - [ ] [C0403] RSA XML 키 기반 암복호화 외에 현대적인 키 포맷 지원 여부 검토
@@ -41,7 +41,7 @@ SmugglerCommon에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되�
   - [ ] [C0503] 숫자/날짜/null 셀 변환 정책 정의
   - [ ] [C0504] `SmugglerTDDs`에 샘플 Excel 파일 기반 테스트 추가
   - [ ] [C0505] `TestConsole`에 Excel 읽기 예제 추가
-- [x] [C0600] Utility: 확장 메서드 및 시스템 유틸 기본 구현
+- [ ] [C0600] Utility: 확장 메서드 및 시스템 유틸 기본 구현
   - [ ] [C0601] `ExMethod`의 날짜/시간 포맷 확장 메서드 명명 규칙 정리
   - [ ] [C0602] `FullJoinDistinct`의 null 안정성 및 제네릭 사용 예제 보강
   - [ ] [C0603] `MathMethod`의 공개 범위와 실제 사용처를 기준으로 유지/삭제 결정
@@ -61,13 +61,13 @@ SmugglerCommon에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되�
 SmugglerControl에 구현된 기능은 `SmugglerTDDs`에 TDD 모듈이 작성되고 `TestWindow`에 예제가 추가된다.
 
 ### Feature Task List
-- [x] [W0100] IconManager: 이미지 시트 분할 및 아이콘 조회 기본 구현
+- [ ] [W0100] IconManager: 이미지 시트 분할 및 아이콘 조회 기본 구현
   - [ ] [W0101] 잘못된 경로, 잘못된 파일명, 범위 초과 인덱스에 대한 예외/기본값 정책 정리
   - [ ] [W0102] 기본 이미지(`Xbox`) 로딩 방식 및 fallback 아이콘 정책 구현
   - [ ] [W0103] 아이콘 캐시 초기화/재로드 기능 추가
   - [ ] [W0104] `SmugglerTDDs`에 아이콘 인덱싱 로직 테스트 추가
   - [ ] [W0105] `TestWindow`에 아이콘 매니저 사용 예제 추가
-- [x] [W0200] Converter: 선택 상태 및 상태값 변환기 기본 구현
+- [ ] [W0200] Converter: 선택 상태 및 상태값 변환기 기본 구현
   - [ ] [W0201] `BoolToBrushConverter` 네이밍을 실제 동작에 맞게 정리하거나 범용 상태 변환기로 확장
   - [ ] [W0202] 선택 비교/필터 변환기의 null 처리와 컬렉션 변경 대응 검증
   - [ ] [W0203] 브러시/상태 매핑을 하드코딩 대신 옵션화할 수 있는 구조 검토
