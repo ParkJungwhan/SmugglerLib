@@ -5,15 +5,19 @@
 ## SmugglerCommon
 SmugglerCommon에 구현된 기능은 SmugglerTDDs에 TDD 모듈이 작성되고 TestConsole에 예제가 추가된다.
 
-### Feature
-- [x] [C0100] Logger : Log4Net을 통한 로그 컴포넌트 구현
-  - [ ] [C0101] Logger : log4net 1 spec
-  - [ ] [C0102] Logger : log4net 2 spec
-- [ ] [C0200] Logger : Log4Net을 통한 로그 컴포넌트 구현
-  - [ ] [C0201] Logger : log4net 1 spec
+### Feature Task List
+- [x] [C0100] Logger: Log4Net을 통한 로그 컴포넌트 구현
+  - [ ] [C0101] feature 1: feature 1 spec
+  - [ ] [C0102] feature 2: feature 2 spec
+- [ ] [C0200] Logger: Log4Net을 통한 로그 컴포넌트 구현
+  - [ ] [C0201] feature 1: feature 1 spec
 
 ## SmugglerControl
 SmugglerControl에 구현된 기능은 SmugglerTDDs에 TDD 모듈이 작성되고 TestWindow에 예제가 추가된다.
-- [x] [W0100] ImageManager 
-- [ ] [W0200] ImageManager 
 
+### Feature Task List
+- [x] [W0100] ImageManager
+  - [ ] [W0101] feature 1: feature 1 spec
+  - [ ] [W0102] feature 2: feature 2 spec
+- [ ] [W0200] Window control feature 1 
+- [ ] [W0300] Window control feature 2
