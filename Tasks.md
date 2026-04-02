@@ -8,14 +8,14 @@
 - C# Common 프로젝트는 모든 라이브러리 프로젝트가 공용으로 사용할 수 있는 프로젝트
 
 ### Feature Task List
-- [ ] [C0100] Logger: `ILogger` 연동 콘솔 로거 기본 구현
-  - [ ] [C0101] `log4net.config`의 파일 로그를 5MB 기준으로 롤링하고 `fileName_N.log` 패턴으로 백업되도록 설정
+- [x] [C0100] Logger: `ILogger` 연동 콘솔 로거 기본 구현
+  - [x] [C0101] `log4net.config`의 파일 로그를 5MB 기준으로 롤링하고 `fileName_N.log` 패턴으로 백업되도록 설정
     - description
-  - [ ] [C0102] 콘솔/파일 로그 포맷을 공통 정책으로 정리하고 카테고리명, 예외, EventId 출력 규칙 통일
-  - [ ] [C0103] `SmugLoggerConfiguration`에 최소 로그 레벨, 색상 맵 기본값, EventId 필터 기본값 제공
-  - [ ] [C0104] `Microsoft.Extensions.Logging` + log4net 초기화 헬퍼 추가
-  - [ ] [C0105] `SmugglerTDDs`에 로거 설정 및 필터 동작 검증 테스트 추가
-  - [ ] [C0106] `TestConsole`에 로그 출력/롤링 예제 추가
+  - [x] [C0102] 콘솔/파일 로그 포맷을 공통 정책으로 정리하고 카테고리명, 예외, EventId 출력 규칙 통일
+  - [x] [C0103] `SmugLoggerConfiguration`에 최소 로그 레벨, 색상 맵 기본값, EventId 필터 기본값 제공
+  - [x] [C0104] `Microsoft.Extensions.Logging` + log4net 초기화 헬퍼 추가
+  - [x] [C0105] `SmugglerTDDs`에 로거 설정 및 필터 동작 검증 테스트 추가
+  - [x] [C0106] `TestConsole`에 로그 출력/롤링 예제 추가
 - [ ] [C0200] Database: SQLite/Dapper 에이전트 기본 클래스 작성
   - [ ] [C0201] SQLite 연결 확인 쿼리를 현재의 `SELECT now()`에서 SQLite 호환 쿼리로 수정
   - [ ] [C0202] DB 파일 경로 검증, 연결 문자열 생성, 연결 실패 예외 메시지 표준화
@@ -170,6 +170,8 @@
   - [ ] [N0307] 재전송, 순서 보장, MTU, fragmentation 관련 운영 옵션 정리
   - [ ] [N0308] `SmugglerTDDs`에 ENet 래퍼/이벤트 처리 테스트 추가
   - [ ] [N0309] `TestConsole`에 UDP/ENet 기반 패킷 송수신 예제 추가
+
+
 
 
 
