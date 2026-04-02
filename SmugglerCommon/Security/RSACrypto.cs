@@ -1,66 +1,72 @@
-﻿using System.Security.Cryptography;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace Smuggler.Common.Security;
 
 public class RSACrypto
 {
-    // need implementation
-    public RSACrypto()
-    { }
-
-    /// <summary>
-    /// </summary>
-    public string RSAEncrypt(string getValue, string pubKey)
+    public string RSAEncrypt(string plainText, string publicKey)
     {
-        using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
-        {
-            rsa.FromXmlString(pubKey);
-            // 암호화할 문자열을 UTF8 인코딩 byte[]로 변환
-            byte[] inbuf = Encoding.UTF8.GetBytes(getValue);
-            // 암호화
-            byte[] encbuf = rsa.Encrypt(inbuf, false);
-            // 암호화된 문자열을 Base64 인코딩하여 반환
-            return Convert.ToBase64String(encbuf);
-        }
+        ArgumentException.ThrowIfNullOrWhiteSpace(plainText);
+        ArgumentException.ThrowIfNullOrWhiteSpace(publicKey);
+
+        using RSA rsa = CreateRsaFromKey(publicKey, includePrivate: false);
+        byte[] input = Encoding.UTF8.GetBytes(plainText);
+        byte[] cipher = rsa.Encrypt(input, RSAEncryptionPadding.OaepSHA256);
+        return Convert.ToBase64String(cipher);
     }
 
-    //public string RSADecrypt
-    /// <summary>
-    /// 복호화 합니다
-    /// </summary>
-    public string RSADecrypt(string getValue, string privKey)
+    public string RSADecrypt(string cipherText, string privateKey)
     {
-        using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
-        {
-            rsa.FromXmlString(privKey);
-            // Base64 인코딩된 문자열을 디코딩하여 byte[]로 변환
-            byte[] inbuf = Convert.FromBase64String(getValue);
-            // 복호화
-            byte[] decbuf = rsa.Decrypt(inbuf, false);
-            // 복호화된 byte[]를 UTF8 문자열로 변환하여 반환
-            return Encoding.UTF8.GetString(decbuf);
-        }
+        ArgumentException.ThrowIfNullOrWhiteSpace(cipherText);
+        ArgumentException.ThrowIfNullOrWhiteSpace(privateKey);
+
+        using RSA rsa = CreateRsaFromKey(privateKey, includePrivate: true);
+        byte[] input = Convert.FromBase64String(cipherText);
+        byte[] plain = rsa.Decrypt(input, RSAEncryptionPadding.OaepSHA256);
+        return Encoding.UTF8.GetString(plain);
     }
 
-    //private readonly string password = "key";
-    //private readonly string encodedString = "";
+    public (string PublicKeyPem, string PrivateKeyPem) CreatePemKeyPair(int keySize = 2048)
+    {
+        using RSA rsa = RSA.Create(keySize);
+        return (rsa.ExportRSAPublicKeyPem(), rsa.ExportPkcs8PrivateKeyPem());
+    }
 
-    //public RSACrypto(string pw = "password", string publickey = "TestKey")
-    //{
-    //    password = pw;
-    //}
+    public (string PublicKeyXml, string PrivateKeyXml) CreateXmlKeyPair(int keySize = 2048)
+    {
+        using RSA rsa = RSA.Create(keySize);
+        return (rsa.ToXmlString(false), rsa.ToXmlString(true));
+    }
 
-    //public string RSAEncrypt(string getValue, string pubKey)
-    //{
-    //    RSACryptoServiceProvider rsa = new RSACryptoServiceProvider();
-    //    rsa.FromXmlString(pubKey);
+    private static RSA CreateRsaFromKey(string keyText, bool includePrivate)
+    {
+        RSA rsa = RSA.Create();
+        string trimmed = keyText.Trim();
 
-    // //암호화할 문자열을 UFT8인코딩 byte[] inbuf = (new UTF8Encoding()).GetBytes(getValue);
+        if (trimmed.StartsWith("<RSAKeyValue>", StringComparison.Ordinal))
+        {
+            rsa.FromXmlString(trimmed);
+            return rsa;
+        }
 
-    // //암호화 byte[] encbuf = rsa.Encrypt(inbuf, false);
+        try
+        {
+            if (includePrivate)
+            {
+                rsa.ImportFromPem(trimmed);
+            }
+            else
+            {
+                rsa.ImportFromPem(trimmed);
+            }
 
-    //    //암호화된 문자열 Base64인코딩
-    //    return System.Convert.ToBase64String(encbuf);
-    //}
+            return rsa;
+        }
+        catch (Exception exception)
+        {
+            rsa.Dispose();
+            throw new ArgumentException("RSA key must be a valid XML key or PEM-formatted key.", nameof(keyText), exception);
+        }
+    }
 }

@@ -1,4 +1,3 @@
-﻿using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -6,198 +5,180 @@ namespace Smuggler.Common.Security;
 
 public sealed class AesApiKeyCryptoService
 {
-    private readonly byte[] pbyteKey;
+    private readonly byte[] _key;
 
-    public AesApiKeyCryptoService(string privatekey)
+    public AesApiKeyCryptoService(string privateKey)
     {
-        //Debug.Assert(false == string.IsNullOrEmpty(privatekey));
-        //pbyteKey = Encoding.ASCII.GetBytes(privatekey);
-        using var sha = SHA256.Create();
-        pbyteKey = sha.ComputeHash(Encoding.UTF8.GetBytes(privatekey));
+        ArgumentException.ThrowIfNullOrWhiteSpace(privateKey);
 
-        Debug.Assert(null != pbyteKey, "API 키가 설정되지 않았습니다. SetAPIKey 메서드를 호출하여 키를 설정하세요.");
-    }
-
-    [Obsolete("닷넷6.0 이상부터는 불가")]
-    public byte[] EncryptStringToBytes_AES(string plainText, byte[] key, byte[] IV)
-    {
-        if (plainText == null || plainText.Length <= 0)
-        {
-            throw new ArgumentNullException("plainText ");
-        }
-
-        if (key == null || key.Length == 0)
-        {
-            throw new ArgumentNullException("key");
-        }
-
-        if (IV == null || IV.Length == 0)
-        {
-            throw new ArgumentNullException("IV");
-        }
-
-        MemoryStream memoryStream = null;
-        CryptoStream cryptoStream = null;
-        StreamWriter streamWriter = null;
-        RijndaelManaged rijndaelManaged = null;
-        try
-        {
-            rijndaelManaged = new RijndaelManaged();
-            rijndaelManaged.Key = key;
-            rijndaelManaged.IV = IV;
-            ICryptoTransform transform = rijndaelManaged.CreateEncryptor(rijndaelManaged.Key, rijndaelManaged.IV);
-            memoryStream = new MemoryStream();
-            cryptoStream = new CryptoStream(memoryStream, transform, CryptoStreamMode.Write);
-            streamWriter = new StreamWriter(cryptoStream);
-            streamWriter.Write(plainText);
-        }
-        finally
-        {
-            streamWriter?.Close();
-            cryptoStream?.Close();
-            memoryStream?.Close();
-            rijndaelManaged?.Clear();
-        }
-
-        return memoryStream.ToArray();
-    }
-
-    [Obsolete("닷넷6.0 이상부터는 불가")]
-    public string DecryptBytesToString_AES(byte[] cipherText, byte[] key, byte[] IV)
-    {
-        if (cipherText == null || cipherText.Length == 0)
-        {
-            throw new ArgumentNullException("cipherText ");
-        }
-
-        if (key == null || key.Length == 0)
-        {
-            throw new ArgumentNullException("key");
-        }
-
-        if (IV == null || IV.Length == 0)
-        {
-            throw new ArgumentNullException("IV");
-        }
-
-        MemoryStream memoryStream = null;
-        CryptoStream cryptoStream = null;
-        StreamReader streamReader = null;
-        RijndaelManaged rijndaelManaged = null;
-        string empty = string.Empty;
-        try
-        {
-            rijndaelManaged = new RijndaelManaged();
-            rijndaelManaged.Key = key;
-            rijndaelManaged.IV = IV;
-            ICryptoTransform transform = rijndaelManaged.CreateDecryptor(rijndaelManaged.Key, rijndaelManaged.IV);
-            memoryStream = new MemoryStream(cipherText);
-            cryptoStream = new CryptoStream(memoryStream, transform, CryptoStreamMode.Read);
-            streamReader = new StreamReader(cryptoStream);
-            return streamReader.ReadToEnd();
-        }
-        finally
-        {
-            streamReader?.Close();
-            cryptoStream?.Close();
-            memoryStream?.Close();
-            rijndaelManaged?.Clear();
-        }
-    }
-
-    [Obsolete("닷넷6.0 이상부터는 불가")]
-    public string EncryptString(string strKey)
-    {
-        Debug.Assert(null != pbyteKey);
-
-        DESCryptoServiceProvider dESCryptoServiceProvider = new DESCryptoServiceProvider();
-        dESCryptoServiceProvider.Mode = CipherMode.ECB;
-        dESCryptoServiceProvider.Padding = PaddingMode.PKCS7;
-        dESCryptoServiceProvider.Key = pbyteKey;
-        dESCryptoServiceProvider.IV = pbyteKey;
-        MemoryStream memoryStream = new MemoryStream();
-        CryptoStream cryptoStream = new CryptoStream(memoryStream, dESCryptoServiceProvider.CreateEncryptor(), CryptoStreamMode.Write);
-        byte[] bytes = Encoding.UTF8.GetBytes(strKey.ToCharArray());
-        cryptoStream.Write(bytes, 0, bytes.Length);
-        cryptoStream.FlushFinalBlock();
-        string result = Convert.ToBase64String(memoryStream.ToArray());
-        dESCryptoServiceProvider = null;
-        return result;
-    }
-
-    [Obsolete("닷넷6.0 이상부터는 불가")]
-    public string DecryptString(string strKey)
-    {
-        Debug.Assert(null != pbyteKey);
-
-        DESCryptoServiceProvider dESCryptoServiceProvider = new DESCryptoServiceProvider();
-        dESCryptoServiceProvider.Mode = CipherMode.ECB;
-        dESCryptoServiceProvider.Padding = PaddingMode.PKCS7;
-        dESCryptoServiceProvider.Key = pbyteKey;
-        dESCryptoServiceProvider.IV = pbyteKey;
-        MemoryStream memoryStream = new MemoryStream();
-        CryptoStream cryptoStream = new CryptoStream(memoryStream, dESCryptoServiceProvider.CreateDecryptor(), CryptoStreamMode.Write);
-        strKey = strKey.Replace(" ", "+");
-        byte[] array = Convert.FromBase64String(strKey);
-        cryptoStream.Write(array, 0, array.Length);
-        cryptoStream.FlushFinalBlock();
-        string @string = Encoding.UTF8.GetString(memoryStream.GetBuffer());
-        memoryStream = null;
-        dESCryptoServiceProvider = null;
-        return @string.Replace("\0", "");
+        using SHA256 sha = SHA256.Create();
+        _key = sha.ComputeHash(Encoding.UTF8.GetBytes(privateKey));
+        ValidateAesKey(_key);
     }
 
     public byte[] Encrypt(string plainText)
     {
-        Debug.Assert(null != pbyteKey);
-        Debug.Assert(false == string.IsNullOrEmpty(plainText));
-        Debug.Assert(pbyteKey.Length == 16 || pbyteKey.Length == 24 || pbyteKey.Length == 32, "AES 키 길이는 16, 24, 또는 32 바이트여야 합니다.");
+        ArgumentException.ThrowIfNullOrWhiteSpace(plainText);
 
         using Aes aes = Aes.Create();
-        aes.Key = pbyteKey;
-        aes.GenerateIV(); // 랜덤 IV 생성
+        aes.Key = _key;
         aes.Mode = CipherMode.CBC;
+        aes.Padding = PaddingMode.PKCS7;
+        aes.GenerateIV();
 
-        using var encryptor = aes.CreateEncryptor();
+        using ICryptoTransform encryptor = aes.CreateEncryptor();
         byte[] plainBytes = Encoding.UTF8.GetBytes(plainText);
         byte[] cipherBytes = encryptor.TransformFinalBlock(plainBytes, 0, plainBytes.Length);
 
-        // IV + 암호문 조합으로 반환
-        byte[] result = new byte[aes.IV.Length + cipherBytes.Length];
-        Buffer.BlockCopy(aes.IV, 0, result, 0, aes.IV.Length);
-        Buffer.BlockCopy(cipherBytes, 0, result, aes.IV.Length, cipherBytes.Length);
-        return result;
+        return CombineIvAndCipher(aes.IV, cipherBytes);
     }
 
     public string EncryptToString(string plainText)
     {
-        Debug.Assert(!string.IsNullOrEmpty(plainText));
         return Convert.ToBase64String(Encrypt(plainText));
     }
 
-    public string DecryptToString(string plainText)
+    public string DecryptToString(string cipherText)
     {
-        Debug.Assert(!string.IsNullOrEmpty(plainText));
-
-        var combined = Convert.FromBase64String(plainText);
-        return Decrypt(combined);
+        ArgumentException.ThrowIfNullOrWhiteSpace(cipherText);
+        return Decrypt(Convert.FromBase64String(cipherText));
     }
 
     public string Decrypt(byte[] encryptedData)
     {
+        ArgumentNullException.ThrowIfNull(encryptedData);
+
+        if (encryptedData.Length <= 16)
+        {
+            throw new ArgumentException("Encrypted payload must contain a 16-byte IV and cipher text.", nameof(encryptedData));
+        }
+
         using Aes aes = Aes.Create();
-        aes.Key = pbyteKey;
+        aes.Key = _key;
         aes.Mode = CipherMode.CBC;
+        aes.Padding = PaddingMode.PKCS7;
 
-        byte[] iv = new byte[16];
-        byte[] cipherText = new byte[encryptedData.Length - 16];
-
-        Buffer.BlockCopy(encryptedData, 0, iv, 0, iv.Length);
-        Buffer.BlockCopy(encryptedData, iv.Length, cipherText, 0, cipherText.Length);
+        byte[] iv = encryptedData[..16];
+        byte[] cipherText = encryptedData[16..];
         aes.IV = iv;
 
-        using var decryptor = aes.CreateDecryptor();
+        using ICryptoTransform decryptor = aes.CreateDecryptor();
         byte[] plainBytes = decryptor.TransformFinalBlock(cipherText, 0, cipherText.Length);
         return Encoding.UTF8.GetString(plainBytes);
+    }
+
+    private static byte[] CombineIvAndCipher(byte[] iv, byte[] cipherBytes)
+    {
+        byte[] result = new byte[iv.Length + cipherBytes.Length];
+        Buffer.BlockCopy(iv, 0, result, 0, iv.Length);
+        Buffer.BlockCopy(cipherBytes, 0, result, iv.Length, cipherBytes.Length);
+        return result;
+    }
+
+    private static void ValidateAesKey(byte[] key)
+    {
+        if (key.Length is not (16 or 24 or 32))
+        {
+            throw new ArgumentException("AES key length must be 16, 24, or 32 bytes.", nameof(key));
+        }
+    }
+}
+
+public sealed class LegacyAesApiKeyCryptoService
+{
+    private readonly byte[] _legacyKey;
+
+    public LegacyAesApiKeyCryptoService(string privateKey)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(privateKey);
+
+        using SHA256 sha = SHA256.Create();
+        _legacyKey = sha.ComputeHash(Encoding.UTF8.GetBytes(privateKey))[..8];
+    }
+
+    [Obsolete("Legacy AES helper retained only for compatibility. Prefer AesApiKeyCryptoService.")]
+    public byte[] EncryptStringToBytes_AES(string plainText, byte[] key, byte[] iv)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(plainText);
+        ValidateLegacyVector(key, nameof(key));
+        ValidateLegacyVector(iv, nameof(iv));
+
+        using RijndaelManaged rijndael = new();
+        rijndael.Key = key;
+        rijndael.IV = iv;
+
+        using MemoryStream memoryStream = new();
+        using ICryptoTransform transform = rijndael.CreateEncryptor(rijndael.Key, rijndael.IV);
+        using CryptoStream cryptoStream = new(memoryStream, transform, CryptoStreamMode.Write);
+        using StreamWriter writer = new(cryptoStream);
+        writer.Write(plainText);
+        writer.Flush();
+        cryptoStream.FlushFinalBlock();
+        return memoryStream.ToArray();
+    }
+
+    [Obsolete("Legacy AES helper retained only for compatibility. Prefer AesApiKeyCryptoService.")]
+    public string DecryptBytesToString_AES(byte[] cipherText, byte[] key, byte[] iv)
+    {
+        ArgumentNullException.ThrowIfNull(cipherText);
+        ValidateLegacyVector(key, nameof(key));
+        ValidateLegacyVector(iv, nameof(iv));
+
+        using RijndaelManaged rijndael = new();
+        rijndael.Key = key;
+        rijndael.IV = iv;
+        using ICryptoTransform transform = rijndael.CreateDecryptor(rijndael.Key, rijndael.IV);
+        using MemoryStream memoryStream = new(cipherText);
+        using CryptoStream cryptoStream = new(memoryStream, transform, CryptoStreamMode.Read);
+        using StreamReader reader = new(cryptoStream);
+        return reader.ReadToEnd();
+    }
+
+    [Obsolete("Legacy DES helper retained only for compatibility. Prefer AesApiKeyCryptoService.")]
+    public string EncryptString(string plainText)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(plainText);
+
+        using DESCryptoServiceProvider des = new();
+        des.Mode = CipherMode.ECB;
+        des.Padding = PaddingMode.PKCS7;
+        des.Key = _legacyKey;
+        des.IV = _legacyKey;
+
+        using MemoryStream memoryStream = new();
+        using CryptoStream cryptoStream = new(memoryStream, des.CreateEncryptor(), CryptoStreamMode.Write);
+        byte[] bytes = Encoding.UTF8.GetBytes(plainText);
+        cryptoStream.Write(bytes, 0, bytes.Length);
+        cryptoStream.FlushFinalBlock();
+        return Convert.ToBase64String(memoryStream.ToArray());
+    }
+
+    [Obsolete("Legacy DES helper retained only for compatibility. Prefer AesApiKeyCryptoService.")]
+    public string DecryptString(string cipherText)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(cipherText);
+
+        using DESCryptoServiceProvider des = new();
+        des.Mode = CipherMode.ECB;
+        des.Padding = PaddingMode.PKCS7;
+        des.Key = _legacyKey;
+        des.IV = _legacyKey;
+
+        using MemoryStream memoryStream = new();
+        using CryptoStream cryptoStream = new(memoryStream, des.CreateDecryptor(), CryptoStreamMode.Write);
+        byte[] buffer = Convert.FromBase64String(cipherText.Replace(" ", "+", StringComparison.Ordinal));
+        cryptoStream.Write(buffer, 0, buffer.Length);
+        cryptoStream.FlushFinalBlock();
+        return Encoding.UTF8.GetString(memoryStream.ToArray());
+    }
+
+    private static void ValidateLegacyVector(byte[] value, string paramName)
+    {
+        ArgumentNullException.ThrowIfNull(value);
+
+        if (value.Length == 0)
+        {
+            throw new ArgumentException("Legacy crypto vector must not be empty.", paramName);
+        }
     }
 }

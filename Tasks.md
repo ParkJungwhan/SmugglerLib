@@ -31,13 +31,13 @@
   - [x] [C0304] `SmugglerTDDs`에 직렬화 round-trip 테스트 추가
   - [x] [C0305] `TestConsole`에 직렬화 사용 예제 추가
     - 직렬화를 위한 샘플 패킷 구현
-- [ ] [C0400] Security: AES/RSA/MD5 보안 유틸 기본 구현
-  - [ ] [C0401] `AesApiKeyCryptoService`의 obsolete 메서드 정리 또는 레거시 호환 계층 분리
-  - [ ] [C0402] AES 암복호화 입력값 검증, 키 길이 정책, 예외 처리 강화
-  - [ ] [C0403] RSA XML 키 기반 암복호화 외에 현대적인 키 포맷 지원 여부 검토
-  - [ ] [C0404] MD5 유틸의 사용 범위를 체크섬 용도로 제한하고 보안 경고 주석 또는 대체 해시 가이드 추가
-  - [ ] [C0405] `SmugglerTDDs`에 AES/RSA/MD5 테스트 케이스 추가
-  - [ ] [C0406] `TestConsole`에 암복호화 예제 추가
+- [x] [C0400] Security: AES/RSA/MD5 보안 유틸 기본 구현
+  - [x] [C0401] `AesApiKeyCryptoService`의 obsolete 메서드 정리 또는 레거시 호환 계층 분리
+  - [x] [C0402] AES 암복호화 입력값 검증, 키 길이 정책, 예외 처리 강화
+  - [x] [C0403] RSA XML 키 기반 암복호화 외에 현대적인 키 포맷 지원 여부 검토
+  - [x] [C0404] MD5 유틸의 사용 범위를 체크섬 용도로 제한하고 보안 경고 주석 또는 대체 해시 가이드 추가
+  - [x] [C0405] `SmugglerTDDs`에 AES/RSA/MD5 테스트 케이스 추가
+  - [x] [C0406] `TestConsole`에 암복호화 예제 추가
 - [ ] [C0500] ExcelDataReader 기반 Excel 로더 모듈 추가
   - [ ] [C0501] Workbook/Sheet 로딩 래퍼 클래스 설계
   - [ ] [C0502] 헤더 행 기준 컬럼 매핑 및 행 모델 변환 기능 추가
@@ -170,6 +170,7 @@
   - [ ] [N0307] 재전송, 순서 보장, MTU, fragmentation 관련 운영 옵션 정리
   - [ ] [N0308] `SmugglerTDDs`에 ENet 래퍼/이벤트 처리 테스트 추가
   - [ ] [N0309] `TestConsole`에 UDP/ENet 기반 패킷 송수신 예제 추가
+
 
 
 

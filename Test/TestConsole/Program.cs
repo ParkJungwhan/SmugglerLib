@@ -7,6 +7,7 @@ internal class Program
         LoggerExample.Run();
         DatabaseExample.Run();
         SerializationExample.Run();
+        SecurityExample.Run();
         return Task.CompletedTask;
     }
 }
