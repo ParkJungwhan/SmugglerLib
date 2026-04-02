@@ -10,8 +10,7 @@
 ### Feature Task List
 - [ ] [C0100] Logger: `ILogger` 연동 콘솔 로거 기본 구현
   - [ ] [C0101] `log4net.config`의 파일 로그를 5MB 기준으로 롤링하고 `fileName_N.log` 패턴으로 백업되도록 설정
-    - desc1
-    - desc2
+    - description
   - [ ] [C0102] 콘솔/파일 로그 포맷을 공통 정책으로 정리하고 카테고리명, 예외, EventId 출력 규칙 통일
   - [ ] [C0103] `SmugLoggerConfiguration`에 최소 로그 레벨, 색상 맵 기본값, EventId 필터 기본값 제공
   - [ ] [C0104] `Microsoft.Extensions.Logging` + log4net 초기화 헬퍼 추가
@@ -31,6 +30,7 @@
   - [ ] [C0303] 파일 저장/로드 또는 스트림 기반 보조 메서드 추가 여부 결정 및 구현
   - [ ] [C0304] `SmugglerTDDs`에 직렬화 round-trip 테스트 추가
   - [ ] [C0305] `TestConsole`에 직렬화 사용 예제 추가
+    - 직렬화를 위한 샘플 패킷 구현
 - [ ] [C0400] Security: AES/RSA/MD5 보안 유틸 기본 구현
   - [ ] [C0401] `AesApiKeyCryptoService`의 obsolete 메서드 정리 또는 레거시 호환 계층 분리
   - [ ] [C0402] AES 암복호화 입력값 검증, 키 길이 정책, 예외 처리 강화
@@ -41,10 +41,13 @@
 - [ ] [C0500] ExcelDataReader 기반 Excel 로더 모듈 추가
   - [ ] [C0501] Workbook/Sheet 로딩 래퍼 클래스 설계
   - [ ] [C0502] 헤더 행 기준 컬럼 매핑 및 행 모델 변환 기능 추가
+    - 여러 파일로 분리된 하나의 공통 시트들을 통합해서 모델링 하는 기능
+    - ex) item.xlsx + item@character.xlsx + item@market.xlsx 의 item 시트의 데이터들을 하나의 구조체로 모델링
   - [ ] [C0503] 숫자/날짜/null 셀 변환 정책 정의
   - [ ] [C0504] `SmugglerTDDs`에 샘플 Excel 파일 기반 테스트 추가
   - [ ] [C0505] `TestConsole`에 Excel 읽기 예제 추가
 - [ ] [C0600] Utility: 확장 메서드 및 시스템 유틸 기본 구현
+  - description: 공통 프로젝트에서 재사용할 수 있는 시스템 보조 기능과 운영 유틸을 정리한다.
   - [ ] [C0601] `ExMethod`의 날짜/시간 포맷 확장 메서드 명명 규칙 정리
   - [ ] [C0602] `FullJoinDistinct`의 null 안정성 및 제네릭 사용 예제 보강
   - [ ] [C0603] `MathMethod`의 공개 범위와 실제 사용처를 기준으로 유지/삭제 결정
@@ -53,7 +56,8 @@
   - [ ] [C0606] `SmugglerTDDs`에 유틸 함수 테스트 추가
   - [ ] [C0607] `TestConsole`에 유틸 사용 예제 추가
   - [ ] [C0608] 프로그램 비정상 종료 시 dump 생성을 위한 `AppDomain`, `TaskScheduler`, 프로세스 예외 hook 구조 정리
-  - [ ] [C0609] dump 파일명, 저장 경로, dump 종류(mini/full), 보관 정책 표준화
+    - 어플리케이션 초입에서 전역으로 설정해서 동작하는 기능
+  - [ ] [C0609] dump 파일명, 저장 경로, dump 종류(mini/full), 보관 정책 표준화  
   - [ ] [C0610] `SmugglerTDDs` 또는 검증용 샘플에서 crash dump 생성 흐름 확인 전략 정리
 - [ ] [C0700] DataStructure: 커스텀 자료구조 모듈 추가
   - [ ] [C0701] 범용 `Queue<T>` 래퍼 또는 확장 큐 구조 설계
@@ -63,6 +67,7 @@
   - [ ] [C0705] `SmugglerTDDs`에 큐 동작, 빈 큐 예외, 순서 보장 테스트 추가
   - [ ] [C0706] `TestConsole`에 큐 사용 예제 추가
 - [ ] [C0800] Network: TCP/UDP 소켓 공용 모듈 추가
+  - description: 클라이언트/단일 모듈 수준에서 바로 사용할 수 있는 소켓 보조 기능을 Common에 정리한다.
   - [ ] [C0801] TCP 클라이언트 연결/재연결/종료 래퍼 설계
   - [ ] [C0802] TCP 서버 세션 관리, 송수신 이벤트, 연결 상태 관리 기능 추가
   - [ ] [C0803] UDP 송신/수신, 브로드캐스트, 포트 바인딩 보조 기능 추가
@@ -71,6 +76,7 @@
   - [ ] [C0806] `SmugglerTDDs`에 로컬 루프백 기반 소켓 테스트 추가
   - [ ] [C0807] `TestConsole`에 TCP/UDP 송수신 예제 추가
 - [ ] [C0900] FileTransfer: FTP/SFTP 서버 및 클라이언트 기능 추가
+  - description: 파일 전송이 필요한 프로젝트에서 재사용할 수 있는 전송 클라이언트와 공통 정책을 정리한다.
   - [ ] [C0901] FTP 클라이언트 연결, 업로드, 다운로드, 디렉터리 조회 기능 설계
   - [ ] [C0902] SFTP 클라이언트 기능 도입을 위한 패키지 및 인증 방식 검토
   - [ ] [C0903] 파일 존재 확인, 디렉터리 생성, overwrite 정책, 재시도 정책 정리
@@ -79,6 +85,7 @@
   - [ ] [C0906] `SmugglerTDDs`에 전송 경로 및 예외 처리 테스트 추가
   - [ ] [C0907] `TestConsole`에 FTP/SFTP 업로드/다운로드 예제 추가
 - [ ] [C1000] Http: REST API 호출 편의성 모듈 추가
+  - description: 외부 REST API 호출을 빠르게 붙일 수 있도록 공통 HTTP 래퍼와 응답 처리 규칙을 정리한다.
   - [ ] [C1001] `HttpClient` 래퍼 또는 API 클라이언트 베이스 클래스 설계
   - [ ] [C1002] GET/POST/PUT/DELETE 요청, 쿼리스트링, 헤더 설정 편의 메서드 추가
   - [ ] [C1003] JSON 직렬화/역직렬화와 공통 응답 모델 처리 구조 정리
@@ -94,7 +101,7 @@
 ### Feature Task List
 - [ ] [W0100] IconManager: 이미지 시트 분할 및 아이콘 조회 기본 구현
   - [ ] [W0101] 잘못된 경로, 잘못된 파일명, 범위 초과 인덱스에 대한 예외/기본값 정책 정리
-  - [ ] [W0102] 기본 이미지(`Xbox`) 로딩 방식 및 fallback 아이콘 정책 구현
+  - [ ] [W0102] 기본 이미지(`Xbox`) 로딩 방식 및 fallback 아이콘 정책 구현    
   - [ ] [W0103] 아이콘 캐시 초기화/재로드 기능 추가
   - [ ] [W0104] `SmugglerTDDs`에 아이콘 인덱싱 로직 테스트 추가
   - [ ] [W0105] `TestWindow`에 아이콘 매니저 사용 예제 추가
@@ -128,6 +135,7 @@
 
 ### Feature Task List
 - [ ] [N0100] Base: 비동기 멀티스레드 서버 공통 기반 모듈 추가
+  - description: TCP/UDP 서버가 공통으로 사용할 lifecycle, worker, queue, buffer, DB, statistics 기반을 만든다.
   - [ ] [N0101] 서버 수명주기(`Start`, `Stop`, `Dispose`)와 취소 토큰을 포함한 공통 `ServerBase` 설계
   - [ ] [N0102] accept/receive/send/logic 처리 분리를 위한 worker thread 또는 task scheduler 구조 정리
   - [ ] [N0103] 세션/peer 공통 상태를 담는 connection context base 클래스 설계
@@ -141,6 +149,7 @@
   - [ ] [N0111] `SmugglerTDDs`에 큐/버퍼/dispatcher/base lifecycle/통계 집계 테스트 추가
   - [ ] [N0112] `TestConsole`에 base server pipeline 및 통계 출력 예제 추가
 - [ ] [N0200] TCP Server: TCP socket 기반 비동기 멀티스레드 서버 구현
+  - description: 세션 기반 TCP 비동기 서버를 만들고 이후 다양한 패킷 직렬화 방식으로 확장 가능하게 설계한다.
   - [ ] [N0201] `SocketAsyncEventArgs` 또는 async socket 기반 listener/accept 루프 구현
   - [ ] [N0202] 클라이언트 세션 생성, 연결 종료 감지, 세션 정리 로직 구현
   - [ ] [N0203] 길이 헤더 기반 또는 구분자 기반 packet framing 구조 설계
@@ -151,6 +160,7 @@
   - [ ] [N0208] `SmugglerTDDs`에 loopback 기반 접속/송수신/packet framing 테스트 추가
   - [ ] [N0209] `TestConsole`에 TCP echo/chat 또는 command server 예제 추가
 - [ ] [N0300] UDP Server: ENet 기반 비동기 멀티스레드 서버 구현
+  - description: ENet 기반 UDP 서버 초안을 만들고 reliable/unreliable 전송과 공통 packet 처리 구조를 맞춘다.
   - [ ] [N0301] ENet 라이브러리 도입 및 프로젝트 참조/배포 정책 정리
   - [ ] [N0302] ENet host 초기화, peer 관리, channel 설정, poll/event loop 구조 구현
   - [ ] [N0303] reliable/unreliable packet 전송 정책과 채널 분리 규칙 정리
@@ -160,5 +170,6 @@
   - [ ] [N0307] 재전송, 순서 보장, MTU, fragmentation 관련 운영 옵션 정리
   - [ ] [N0308] `SmugglerTDDs`에 ENet 래퍼/이벤트 처리 테스트 추가
   - [ ] [N0309] `TestConsole`에 UDP/ENet 기반 패킷 송수신 예제 추가
+
 
 
