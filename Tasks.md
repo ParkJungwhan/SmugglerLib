@@ -16,14 +16,14 @@
   - [x] [C0104] `Microsoft.Extensions.Logging` + log4net 초기화 헬퍼 추가
   - [x] [C0105] `SmugglerTDDs`에 로거 설정 및 필터 동작 검증 테스트 추가
   - [x] [C0106] `TestConsole`에 로그 출력/롤링 예제 추가
-- [ ] [C0200] Database: SQLite/Dapper 에이전트 기본 클래스 작성
-  - [ ] [C0201] SQLite 연결 확인 쿼리를 현재의 `SELECT now()`에서 SQLite 호환 쿼리로 수정
-  - [ ] [C0202] DB 파일 경로 검증, 연결 문자열 생성, 연결 실패 예외 메시지 표준화
-  - [ ] [C0203] 공통 `Query`, `QuerySingle`, `Execute` 래퍼 메서드 추가
-  - [ ] [C0204] 트랜잭션 처리와 예외 로깅 연계 기능 추가
-  - [ ] [C0205] `IDBAgent` 인터페이스에 최소 계약 정의
-  - [ ] [C0206] `SmugglerTDDs`에 SQLite 기반 연결/조회 테스트 추가
-  - [ ] [C0207] `TestConsole` 또는 `TestAPI`에 DB 에이전트 사용 예제 추가
+- [x] [C0200] Database: SQLite/Dapper 에이전트 기본 클래스 작성
+  - [x] [C0201] SQLite 연결 확인 쿼리를 현재의 `SELECT now()`에서 SQLite 호환 쿼리로 수정
+  - [x] [C0202] DB 파일 경로 검증, 연결 문자열 생성, 연결 실패 예외 메시지 표준화
+  - [x] [C0203] 공통 `Query`, `QuerySingle`, `Execute` 래퍼 메서드 추가
+  - [x] [C0204] 트랜잭션 처리와 예외 로깅 연계 기능 추가
+  - [x] [C0205] `IDBAgent` 인터페이스에 최소 계약 정의
+  - [x] [C0206] `SmugglerTDDs`에 SQLite 기반 연결/조회 테스트 추가
+  - [x] [C0207] `TestConsole` 또는 `TestAPI`에 DB 에이전트 사용 예제 추가
 - [ ] [C0300] Serialization: MemoryPack 직렬화 구현 추가
   - [ ] [C0301] `ISerializer` 기준 null 입력, 빈 바이트 배열 입력 정책 정리
   - [ ] [C0302] 제네릭 직렬화/역직렬화 실패 시 예외 메시지 표준화
@@ -170,6 +170,7 @@
   - [ ] [N0307] 재전송, 순서 보장, MTU, fragmentation 관련 운영 옵션 정리
   - [ ] [N0308] `SmugglerTDDs`에 ENet 래퍼/이벤트 처리 테스트 추가
   - [ ] [N0309] `TestConsole`에 UDP/ENet 기반 패킷 송수신 예제 추가
+
 
 
 

@@ -5,6 +5,7 @@ internal class Program
     private static Task Main(string[] args)
     {
         LoggerExample.Run();
+        DatabaseExample.Run();
         return Task.CompletedTask;
     }
 }

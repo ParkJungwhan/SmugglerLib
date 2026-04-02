@@ -1,48 +1,89 @@
-﻿using Microsoft.Data.Sqlite;
+using System.Data;
+using Dapper;
+using Microsoft.Extensions.Logging;
 
 namespace Smuggler.Common.DataBase;
 
-public class DapperAgent : IDBAgent
+public class DapperAgent : DBAgent
 {
-    /*
-    using var connection = new SqliteConnection("Data Source=Blogs.db");
-    connection.Open();
-
-    using var command = connection.CreateCommand();
-    command.CommandText = "SELECT Url FROM Blogs";
-
-    using var reader = command.ExecuteReader();
-    while (reader.Read())
+    public DapperAgent(string? databasePath = null, ILogger<DapperAgent>? logger = null)
+        : base(databasePath, logger)
     {
-        var url = reader.GetString(0);
     }
-    */
 
-    public bool SetConnection(string strDBFile)
+    public override IReadOnlyList<T> Query<T>(string sql, object? param = null, IDbTransaction? transaction = null)
     {
-        if (string.IsNullOrEmpty(strDBFile))
+        ValidateSql(sql);
+
+        if (transaction is not null)
         {
-            throw new ArgumentNullException();
+            return transaction.Connection!.Query<T>(sql, param, transaction).AsList();
         }
 
-        if (false == File.Exists(strDBFile)) return false;
+        using var connection = CreateOpenedConnection();
+        return connection.Query<T>(sql, param).AsList();
+    }
 
-        //"Data Source=Blogs.db"
-        string strConnect = $"Data Source={strDBFile}";
+    public override T QuerySingle<T>(string sql, object? param = null, IDbTransaction? transaction = null)
+    {
+        ValidateSql(sql);
 
-        using var connection = new SqliteConnection(strConnect);
-        connection.Open();
-
-        using var command = connection.CreateCommand();
-        //command.CommandText = "SELECT Url FROM Blogs";
-        command.CommandText = "SELECT now()";
-
-        using var reader = command.ExecuteReader();
-        while (reader.Read())
+        if (transaction is not null)
         {
-            var url = reader.GetString(0);
+            return transaction.Connection!.QuerySingle<T>(sql, param, transaction);
         }
 
-        return true;
+        using var connection = CreateOpenedConnection();
+        return connection.QuerySingle<T>(sql, param);
+    }
+
+    public override int Execute(string sql, object? param = null, IDbTransaction? transaction = null)
+    {
+        ValidateSql(sql);
+
+        if (transaction is not null)
+        {
+            return transaction.Connection!.Execute(sql, param, transaction);
+        }
+
+        using var connection = CreateOpenedConnection();
+        return connection.Execute(sql, param);
+    }
+
+    public override T ExecuteInTransaction<T>(Func<IDbConnection, IDbTransaction, T> action)
+    {
+        ArgumentNullException.ThrowIfNull(action);
+
+        using var connection = CreateOpenedConnection();
+        using var transaction = connection.BeginTransaction();
+
+        try
+        {
+            T result = action(connection, transaction);
+            transaction.Commit();
+            return result;
+        }
+        catch (Exception exception)
+        {
+            try
+            {
+                transaction.Rollback();
+            }
+            catch (Exception rollbackException)
+            {
+                Logger?.LogError(rollbackException, "SQLite transaction rollback failed for {DatabasePath}", DatabasePath);
+            }
+
+            Logger?.LogError(exception, "SQLite transaction failed for {DatabasePath}", DatabasePath);
+            throw new InvalidOperationException($"SQLite transaction failed for '{DatabasePath}'.", exception);
+        }
+    }
+
+    private static void ValidateSql(string sql)
+    {
+        if (string.IsNullOrWhiteSpace(sql))
+        {
+            throw new ArgumentException("SQL is required.", nameof(sql));
+        }
     }
 }
