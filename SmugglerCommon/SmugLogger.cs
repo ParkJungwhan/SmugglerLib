@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 
 namespace Smuggler.Common;
 
@@ -42,36 +42,69 @@ public class SmugLogger : ILogger
 
     public IDisposable? BeginScope<TState>(TState state) where TState : notnull => default;
 
-    public bool IsEnabled(LogLevel logLevel) => _getCurrentConfig().LogLevelToColorMap.ContainsKey(logLevel);
+    /// <summary>
+    /// logLevel이 MinLevel 이상이고 LogLevelToColorMap에 등록된 경우에만 true를 반환한다.
+    /// </summary>
+    public bool IsEnabled(LogLevel logLevel)
+    {
+        SmugLoggerConfiguration config = _getCurrentConfig();
+        if (logLevel < config.MinLevel)
+            return false;
+        return config.LogLevelToColorMap.ContainsKey(logLevel);
+    }
 
     public void Log<TState>(
-    LogLevel logLevel,
-    EventId eventId,
-    TState state,
-    Exception? exception,
-    Func<TState, Exception?, string> formatter)
+        LogLevel logLevel,
+        EventId eventId,
+        TState state,
+        Exception? exception,
+        Func<TState, Exception?, string> formatter)
     {
         if (!IsEnabled(logLevel))
-        {
             return;
-        }
 
         SmugLoggerConfiguration config = _getCurrentConfig();
-        if (config.EventId == 0 || config.EventId == eventId.Id)
+
+        // EventId 필터: config.EventId가 0이면 모두 출력, 아니면 일치하는 경우만 출력
+        if (config.EventId != 0 && config.EventId != eventId.Id)
+            return;
+
+        ConsoleColor originalColor = Console.ForegroundColor;
+        string timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff");
+        string levelTag = GetLevelTag(logLevel);
+        ConsoleColor levelColor = config.LogLevelToColorMap[logLevel];
+
+        // 형식: [yyyy-MM-dd HH:mm:ss.fff] [LVL] [EventId:N] CategoryName: message
+        Console.ForegroundColor = levelColor;
+        Console.Write($"[{timestamp}] [{levelTag}]");
+
+        if (eventId.Id != 0)
+            Console.Write($" [EventId:{eventId.Id}]");
+
+        Console.ForegroundColor = originalColor;
+        Console.Write($" {_name}: ");
+
+        Console.ForegroundColor = levelColor;
+        Console.Write(formatter(state, exception));
+
+        if (exception != null)
         {
-            ConsoleColor originalColor = Console.ForegroundColor;
-
-            Console.ForegroundColor = config.LogLevelToColorMap[logLevel];
-            Console.WriteLine($"[{eventId.Id,2}: {logLevel,-12}]");
-
-            Console.ForegroundColor = originalColor;
-            Console.Write($"     {_name} - ");
-
-            Console.ForegroundColor = config.LogLevelToColorMap[logLevel];
-            Console.Write($"{formatter(state, exception)}");
-
-            Console.ForegroundColor = originalColor;
-            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write($"\n  Exception: {exception}");
         }
+
+        Console.ForegroundColor = originalColor;
+        Console.WriteLine();
     }
+
+    private static string GetLevelTag(LogLevel logLevel) => logLevel switch
+    {
+        LogLevel.Trace       => "TRC",
+        LogLevel.Debug       => "DBG",
+        LogLevel.Information => "INF",
+        LogLevel.Warning     => "WRN",
+        LogLevel.Error       => "ERR",
+        LogLevel.Critical    => "CRT",
+        _                    => "???",
+    };
 }
