@@ -6,7 +6,8 @@ internal class Program
     {
         //Logger.Run();
         //Database.Run();
-        Serializer.Run();
+        //Serializer.Run();
+        Security.Run();
 
         //ExcelReader.ReadExcelFile();
 
