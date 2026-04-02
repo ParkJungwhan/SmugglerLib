@@ -1,8 +1,8 @@
-﻿namespace Smuggler.Common.Interfaces;
+namespace Smuggler.Common.Interfaces;
 
 public interface ISerializer
 {
-    byte[] Serialize<T>(T obj);
+    byte[] Serialize<T>(T? obj);
 
-    T Deserialize<T>(byte[] data);
+    T? Deserialize<T>(byte[]? data);
 }

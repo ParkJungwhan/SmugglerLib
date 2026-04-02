@@ -24,12 +24,12 @@
   - [x] [C0205] `IDBAgent` 인터페이스에 최소 계약 정의
   - [x] [C0206] `SmugglerTDDs`에 SQLite 기반 연결/조회 테스트 추가
   - [x] [C0207] `TestConsole` 또는 `TestAPI`에 DB 에이전트 사용 예제 추가
-- [ ] [C0300] Serialization: MemoryPack 직렬화 구현 추가
-  - [ ] [C0301] `ISerializer` 기준 null 입력, 빈 바이트 배열 입력 정책 정리
-  - [ ] [C0302] 제네릭 직렬화/역직렬화 실패 시 예외 메시지 표준화
-  - [ ] [C0303] 파일 저장/로드 또는 스트림 기반 보조 메서드 추가 여부 결정 및 구현
-  - [ ] [C0304] `SmugglerTDDs`에 직렬화 round-trip 테스트 추가
-  - [ ] [C0305] `TestConsole`에 직렬화 사용 예제 추가
+- [x] [C0300] Serialization: MemoryPack 직렬화 구현 추가
+  - [x] [C0301] `ISerializer` 기준 null 입력, 빈 바이트 배열 입력 정책 정리
+  - [x] [C0302] 제네릭 직렬화/역직렬화 실패 시 예외 메시지 표준화
+  - [x] [C0303] 파일 저장/로드 또는 스트림 기반 보조 메서드 추가 여부 결정 및 구현
+  - [x] [C0304] `SmugglerTDDs`에 직렬화 round-trip 테스트 추가
+  - [x] [C0305] `TestConsole`에 직렬화 사용 예제 추가
     - 직렬화를 위한 샘플 패킷 구현
 - [ ] [C0400] Security: AES/RSA/MD5 보안 유틸 기본 구현
   - [ ] [C0401] `AesApiKeyCryptoService`의 obsolete 메서드 정리 또는 레거시 호환 계층 분리
@@ -170,6 +170,7 @@
   - [ ] [N0307] 재전송, 순서 보장, MTU, fragmentation 관련 운영 옵션 정리
   - [ ] [N0308] `SmugglerTDDs`에 ENet 래퍼/이벤트 처리 테스트 추가
   - [ ] [N0309] `TestConsole`에 UDP/ENet 기반 패킷 송수신 예제 추가
+
 
 
 
